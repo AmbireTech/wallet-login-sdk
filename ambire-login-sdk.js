@@ -15,4 +15,4 @@ window.addEventListener('message', (e) => {
 }, false)
 
 let iframe = getIframe()
-document.getElementById("ambire-sdk").innerHTML = iframe
+document.getElementById("ambire-sdk-iframe").innerHTML = iframe
