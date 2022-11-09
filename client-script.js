@@ -1,4 +1,5 @@
 const sdk = new window.AmbireSDK({
+    walletUrl: 'http://localhost:3000',
     dappName: 'dapp1',
     iframeElementId: 'ambire-sdk-iframe',
     connectButtonId: 'connect',
@@ -6,5 +7,5 @@ const sdk = new window.AmbireSDK({
     addressElementId: 'wallet-address',
 })
 sdk.onLoginSuccess(function(address) {
-    console.log(`Client onLoginSuccess, address is: ${address}`)
+    document.getElementById("wallet-address").innerHTML = `Wallet address: ${address}`
 })

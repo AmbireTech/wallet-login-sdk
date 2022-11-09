@@ -25,14 +25,23 @@ window.AmbireSDK = function (opt = {}) {
         self.logout()
     })
 
+    this.hideIframe = function() {
+        self.iframeElement.style.display = 'none'
+    }
+
+    this.showIframe = function(url) {
+        self.iframeElement.style.display = 'block'
+        self.iframeElement.style.width = '320px'
+        self.iframeElement.style.height = '600px'
+        self.iframeElement.innerHTML = `<iframe src="`+ url +`" width="100%" height="100%" frameborder="0"/>`
+    }
+
     this.openLogin = function() {
         // TODO
 
         // temp code
         self.connectButton.style.display = 'none'
-        self.iframeElement.style.width = '100%'
-        self.iframeElement.style.height = '600px'    
-        self.iframeElement.innerHTML = `<iframe src="http://localhost:3000/#/email-login-iframe" width="100%" height="100%" frameborder="0"/>`
+        this.showIframe(opt.walletUrl + '/#/email-login-iframe')
     }
 
     this.openSignMessage = function() {
@@ -47,7 +56,7 @@ window.AmbireSDK = function (opt = {}) {
         // TODO
 
         if (!window.localStorage.getItem('wallet_address')) return
-        
+
         window.localStorage.removeItem('wallet_address')
         self.logoutButton.style.display = 'none'
         self.addressElement.innerHTML = ''
@@ -72,11 +81,11 @@ window.AmbireSDK = function (opt = {}) {
     // ambire-login-success listener
     this.onLoginSuccess = function(callback) {
         window.addEventListener('message', (e) => {
-            if (e.origin !== 'http://localhost:3000') return
+            if (e.origin !== opt.walletUrl) return
 
             // console.log(`ambire login details: ${JSON.stringify(e.data)}`)
             self.addressElement.innerHTML = `Wallet address: ${e.data.address}`
-            self.iframeElement.remove()
+            this.hideIframe()
             self.logoutButton.style.display = 'block'
             window.localStorage.setItem('wallet_address', e.data.address)
 
