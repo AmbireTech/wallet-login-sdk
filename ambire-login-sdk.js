@@ -1,4 +1,3 @@
-const walletUrl = 'http://localhost:3000'
 window.AmbireSDK = function (opt = {}) {
     const self = this
 
@@ -42,7 +41,7 @@ window.AmbireSDK = function (opt = {}) {
 
         // temp code
         self.connectButton.style.display = 'none'
-        this.showIframe(walletUrl + '/#/email-login-iframe')
+        this.showIframe(opt.walletUrl + '/#/email-login-iframe')
     }
 
     this.openSignMessage = function() {
@@ -82,7 +81,7 @@ window.AmbireSDK = function (opt = {}) {
     // ambire-login-success listener
     this.onLoginSuccess = function(callback) {
         window.addEventListener('message', (e) => {
-            if (e.origin !== walletUrl) return
+            if (e.origin !== opt.walletUrl) return
 
             // console.log(`ambire login details: ${JSON.stringify(e.data)}`)
             self.addressElement.innerHTML = `Wallet address: ${e.data.address}`
