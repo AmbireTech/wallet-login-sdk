@@ -9,3 +9,6 @@ const sdk = new window.AmbireSDK({
 sdk.onLoginSuccess(function(address) {
     document.getElementById("wallet-address").innerHTML = `Wallet address: ${address}`
 })
+sdk.onRegistrationSuccess(function(address) {
+    document.getElementById("wallet-address").innerHTML = `Wallet address: ${address}`
+})
