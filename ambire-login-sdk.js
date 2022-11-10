@@ -78,8 +78,7 @@ window.AmbireSDK = function (opt = {}) {
         })
     }
 
-    // ambire-login-success listener
-    this.onLoginSuccess = function(callback) {
+    this.handleMessage = function(callback) {
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl) return
 
@@ -91,5 +90,15 @@ window.AmbireSDK = function (opt = {}) {
 
             callback(e.data.address)
         }, false)
+    }
+
+    // ambire-login-success listener
+    this.onLoginSuccess = function(callback) {
+        this.handleMessage(callback)
+    }
+
+    // ambire-registration-success listener
+    this.onRegistrationSuccess = function(callback) {
+        this.handleMessage(callback)
     }
 }
