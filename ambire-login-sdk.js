@@ -6,6 +6,7 @@ window.AmbireSDK = function (opt = {}) {
     this.connectButton = document.getElementById(opt.connectButtonId ?? "ambire-sdk-connect-btn")
     this.logoutButton = document.getElementById(opt.logoutButtonId ?? "ambire-sdk-logout-btn")
     this.addressElement = document.getElementById(opt.addressElementId ?? "ambire-sdk-wallet-address")
+    this.sendTxnButton = document.getElementById(opt.sendTxButtonElementId ?? "ambire-sdk-send-transaction")
 
     // init
     const wallet = window.localStorage.getItem('wallet_address')
@@ -13,13 +14,22 @@ window.AmbireSDK = function (opt = {}) {
         this.addressElement.innerHTML = `Wallet address: ${wallet}`
         this.connectButton.style.display = 'none'
         this.logoutButton.style.display = 'block'
+        this.sendTxnButton.style.display = 'block'
     } else {
         this.addressElement.innerHTML = ''
         this.connectButton.style.display = 'block'
         this.logoutButton.style.display = 'none'
+        this.sendTxnButton.style.display = 'none'
     }
     this.connectButton.addEventListener('click', function() {
         self.openLogin()
+    })
+    this.sendTxnButton.addEventListener('click', function() {
+        self.openSendTransaction(
+            '0x',
+            '0x',
+            '0x'
+        )
     })
     this.logoutButton.addEventListener('click', function() {
         self.logout()
@@ -41,15 +51,16 @@ window.AmbireSDK = function (opt = {}) {
 
         // temp code
         self.connectButton.style.display = 'none'
-        this.showIframe(opt.walletUrl + '/#/email-login-iframe')
+        self.showIframe(opt.walletUrl + '/#/email-login-iframe')
     }
 
     this.openSignMessage = function() {
         // TODO
     }
 
-    this.openSendTransaction = function() {
+    this.openSendTransaction = function(to, value, data) {
         // TODO
+        self.showIframe(`${opt.walletUrl}/#/wallet/sign-sdk/${to}/${value}/${data}`)
     }
 
     this.logout = function() {
@@ -61,6 +72,7 @@ window.AmbireSDK = function (opt = {}) {
         self.logoutButton.style.display = 'none'
         self.addressElement.innerHTML = ''
         self.connectButton.style.display = 'block'
+        self.sendTxnButton.style.display = 'none'
     }
 
     // emit event
@@ -82,9 +94,11 @@ window.AmbireSDK = function (opt = {}) {
     this.onLoginSuccess = function(callback) {
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl) return
+            if (e.data.type !== 'loginSuccess') return
 
             // console.log(`ambire login details: ${JSON.stringify(e.data)}`)
             self.addressElement.innerHTML = `Wallet address: ${e.data.address}`
+            self.sendTxnButton.style.display = 'block'
             this.hideIframe()
             self.logoutButton.style.display = 'block'
             window.localStorage.setItem('wallet_address', e.data.address)
