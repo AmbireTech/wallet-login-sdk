@@ -6,7 +6,8 @@ window.AmbireSDK = function (opt = {}) {
     this.connectButton = document.getElementById(opt.connectButtonId ?? "ambire-sdk-connect-btn")
     this.logoutButton = document.getElementById(opt.logoutButtonId ?? "ambire-sdk-logout-btn")
     this.addressElement = document.getElementById(opt.addressElementId ?? "ambire-sdk-wallet-address")
-    this.sendTxnButton = document.getElementById(opt.sendTxButtonElementId ?? "ambire-sdk-send-transaction")
+    this.sendTxnDiv = document.getElementById(opt.sendTxDivElementId ?? "ambire-sdk-send-transaction")
+    this.sendTxnButton = document.getElementById(opt.sendTxButtonElementId ?? "ambire-sdk-send-transaction-btn")
 
     // init
     const wallet = window.localStorage.getItem('wallet_address')
@@ -14,21 +15,22 @@ window.AmbireSDK = function (opt = {}) {
         this.addressElement.innerHTML = `Wallet address: ${wallet}`
         this.connectButton.style.display = 'none'
         this.logoutButton.style.display = 'block'
-        this.sendTxnButton.style.display = 'block'
+        this.sendTxnDiv.style.display = 'block'
     } else {
         this.addressElement.innerHTML = ''
         this.connectButton.style.display = 'block'
         this.logoutButton.style.display = 'none'
-        this.sendTxnButton.style.display = 'none'
+        this.sendTxnDiv.style.display = 'none'
     }
     this.connectButton.addEventListener('click', function() {
         self.openLogin()
     })
     this.sendTxnButton.addEventListener('click', function() {
+        const inputs = self.sendTxnDiv.getElementsByTagName('input')
         self.openSendTransaction(
-            '0x',
-            '0x',
-            '0x'
+            inputs[0].value,
+            inputs[1].value,
+            inputs[2].value
         )
     })
     this.logoutButton.addEventListener('click', function() {
@@ -59,7 +61,14 @@ window.AmbireSDK = function (opt = {}) {
     }
 
     this.openSendTransaction = function(to, value, data) {
-        // TODO
+        if (
+            !to || !value || !data
+            || typeof to !== 'string'
+            || typeof value !== 'string'
+            || typeof data !== 'string'
+        ) {
+            return alert('Invalid txn input data')
+        }
         self.showIframe(`${opt.walletUrl}/#/wallet/sign-sdk/${to}/${value}/${data}`)
     }
 
@@ -72,7 +81,7 @@ window.AmbireSDK = function (opt = {}) {
         self.logoutButton.style.display = 'none'
         self.addressElement.innerHTML = ''
         self.connectButton.style.display = 'block'
-        self.sendTxnButton.style.display = 'none'
+        self.sendTxnDiv.style.display = 'none'
     }
 
     // emit event
@@ -97,7 +106,7 @@ window.AmbireSDK = function (opt = {}) {
 
             // console.log(`ambire login details: ${JSON.stringify(e.data)}`)
             self.addressElement.innerHTML = `Wallet address: ${e.data.address}`
-            self.sendTxnButton.style.display = 'block'
+            self.sendTxnDiv.style.display = 'block'
             this.hideIframe()
             self.logoutButton.style.display = 'block'
             window.localStorage.setItem('wallet_address', e.data.address)

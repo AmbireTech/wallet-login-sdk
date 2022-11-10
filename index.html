@@ -12,7 +12,18 @@
     <div>Dapp content here</div>
     <div id="wallet-address"></div>
     <button id="connect">Conenct via Email</button>
-    <button id="ambire-sdk-send-transaction">SendTransaction</button>
+    <div id="ambire-sdk-send-transaction">
+        <p>Send Transaction</p>
+        <p>
+            <label for="txnTo">Txn To:</label>
+            <input type="text" name="txnTo">
+            <label for="txnTo">Txn Value:</label>
+            <input type="text" name="txnValue">
+            <label for="txnTo">Txn Data:</label>
+            <input type="text" name="txnData">
+        </p>
+        <button id="ambire-sdk-send-transaction-btn">SendTransaction</button>
+    </div>
     <button id="logout">Logout</button>
 
     <script src="ambire-login-sdk.js"></script>
