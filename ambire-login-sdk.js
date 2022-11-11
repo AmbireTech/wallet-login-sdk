@@ -27,6 +27,7 @@ window.AmbireSDK = function (opt = {}) {
 
     this.hideIframe = function() {
         self.iframeElement.style.display = 'none'
+        self.iframeElement.innerHTML = ''
     }
 
     this.showIframe = function(url) {
@@ -78,27 +79,50 @@ window.AmbireSDK = function (opt = {}) {
         })
     }
 
-    this.handleMessage = function(callback) {
+    // ambire-login-success listener
+    this.onLoginSuccess = function(callback) {
         window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl) return
+            if (e.origin !== opt.walletUrl || e.data.type != 'loginSuccess') return
 
-            // console.log(`ambire login details: ${JSON.stringify(e.data)}`)
             self.addressElement.innerHTML = `Wallet address: ${e.data.address}`
             this.hideIframe()
             self.logoutButton.style.display = 'block'
-            window.localStorage.setItem('wallet_address', e.data.address)
+            this.setAddress(e.data.address)
 
             callback(e.data.address)
-        }, false)
-    }
-
-    // ambire-login-success listener
-    this.onLoginSuccess = function(callback) {
-        this.handleMessage(callback)
+        })
     }
 
     // ambire-registration-success listener
     this.onRegistrationSuccess = function(callback) {
-        this.handleMessage(callback)
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type != 'registrationSuccess') return
+
+            self.addressElement.innerHTML = `Wallet address: ${e.data.address}`
+            self.logoutButton.style.display = 'block'
+            this.setAddress(e.data.address)
+            // const onRampUrl = 'https://sandbox.bifinity.org/en/pre-connect?merchantCode=xubo_test&timestamp=1663535952836'
+            const buyCrypto = opt.walletUrl + '/#/on-ramp-sdk'
+            self.iframeElement.innerHTML = `<iframe src="`+ buyCrypto +`" width="100%" height="100%" frameborder="0"/>`
+
+            callback(e.data.address)
+        })
+
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type != 'openRamp') return
+
+            const onRampUrl = 'https://sandbox.bifinity.org/en/pre-connect?merchantCode=xubo_test&timestamp=1663535952836'
+            self.iframeElement.innerHTML = `<iframe src="`+ onRampUrl +`" width="100%" height="100%" frameborder="0"/>`
+        })
+
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type != 'cancelRamp') return
+
+            this.hideIframe()
+        })
+    }
+
+    this.setAddress = function(address) {
+        window.localStorage.setItem('wallet_address', address)
     }
 }
