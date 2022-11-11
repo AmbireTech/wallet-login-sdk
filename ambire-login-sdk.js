@@ -70,6 +70,12 @@ window.AmbireSDK = function (opt = {}) {
             return alert('Invalid txn input data')
         }
         self.showIframe(`${opt.walletUrl}/#/sign-sdk/${to}/${value}/${data}`)
+
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl) return
+            if (e.data.type !== 'signClose') return
+            this.hideIframe()
+        }, false)
     }
 
     this.logout = function() {
