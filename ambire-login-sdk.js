@@ -69,7 +69,7 @@ window.AmbireSDK = function (opt = {}) {
         ) {
             return alert('Invalid txn input data')
         }
-        self.showIframe(`${opt.walletUrl}/#/wallet/sign-sdk/${to}/${value}/${data}`)
+        self.showIframe(`${opt.walletUrl}/#/sign-sdk/${to}/${value}/${data}`)
     }
 
     this.logout = function() {
