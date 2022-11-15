@@ -129,8 +129,7 @@ window.AmbireSDK = function (opt = {}) {
             self.addressElement.innerHTML = `Wallet address: ${e.data.address}`
             self.logoutButton.style.display = 'block'
             this.setAddress(e.data.address)
-            // const onRampUrl = 'https://sandbox.bifinity.org/en/pre-connect?merchantCode=xubo_test&timestamp=1663535952836'
-            const buyCrypto = opt.walletUrl + '/#/on-ramp-sdk'
+            const buyCrypto = opt.walletUrl + '/#/on-ramp-sdk/' + opt.chainID
             self.iframeElement.innerHTML = `<iframe src="`+ buyCrypto +`" width="100%" height="100%" frameborder="0"/>`
 
             callback(e.data.address)
@@ -139,7 +138,19 @@ window.AmbireSDK = function (opt = {}) {
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl || e.data.type != 'openRamp') return
 
-            const onRampUrl = 'https://sandbox.bifinity.org/en/pre-connect?merchantCode=xubo_test&timestamp=1663535952836'
+            const timestamp = Date.now() // tested, correct timestamp
+            const address = e.data.address
+            const merchantCode = "xubo_test"
+            const networkCode = e.data.networkCode
+
+            // TO DO: signature
+            const signatureToSign = "cryptoAddress="+address+"&\
+                cryptoNetwork="+networkCode+"&\
+                merchantCode="+merchantCode+"&\
+                timestamp="+timestamp
+            const signature = ""
+
+            const onRampUrl = "https://www.binancecnt.com/en/pre-connect?merchantCode="+merchantCode+"&timestamp="+timestamp+"&cryptoAddress="+address+"&cryptoNetwork="+networkCode+"&signature="+signature
             self.iframeElement.innerHTML = `<iframe src="`+ onRampUrl +`" width="100%" height="100%" frameborder="0"/>`
         })
 
