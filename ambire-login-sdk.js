@@ -142,13 +142,7 @@ window.AmbireSDK = function (opt = {}) {
             const address = e.data.address
             const merchantCode = "xubo_test"
             const networkCode = e.data.networkCode
-
-            // TO DO: signature
-            const signatureToSign = "cryptoAddress="+address+"&\
-                cryptoNetwork="+networkCode+"&\
-                merchantCode="+merchantCode+"&\
-                timestamp="+timestamp
-            const signature = ""
+            const signature = e.data.signature
 
             const onRampUrl = "https://www.binancecnt.com/en/pre-connect?merchantCode="+merchantCode+"&timestamp="+timestamp+"&cryptoAddress="+address+"&cryptoNetwork="+networkCode+"&signature="+signature
             self.iframeElement.innerHTML = `<iframe src="`+ onRampUrl +`" width="100%" height="100%" frameborder="0"/>`
