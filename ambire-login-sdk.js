@@ -3,6 +3,7 @@ window.AmbireSDK = function (opt = {}) {
 
     this.dappName = opt.dappName ?? 'Unknown Dapp'
     this.iframeElement = document.getElementById(opt.iframeElementId ?? "ambire-sdk-iframe")
+    this.iframeCloseButton = document.getElementById(opt.iframeCloseButtontId ?? "ambire-sdk-iframe-close")
     this.connectButton = document.getElementById(opt.connectButtonId ?? "ambire-sdk-connect-btn")
     this.logoutButton = document.getElementById(opt.logoutButtonId ?? "ambire-sdk-logout-btn")
     this.addressElement = document.getElementById(opt.addressElementId ?? "ambire-sdk-wallet-address")
@@ -22,6 +23,8 @@ window.AmbireSDK = function (opt = {}) {
         this.logoutButton.style.display = 'none'
         this.sendTxnDiv.style.display = 'none'
     }
+    this.iframeCloseButton.style.display = 'none'
+
     this.connectButton.addEventListener('click', function() {
         self.openLogin()
     })
@@ -36,9 +39,13 @@ window.AmbireSDK = function (opt = {}) {
     this.logoutButton.addEventListener('click', function() {
         self.logout()
     })
+    this.iframeCloseButton.addEventListener('click', function() {
+        self.hideIframe()
+    })
 
     this.hideIframe = function() {
         self.iframeElement.style.display = 'none'
+        self.iframeCloseButton.style.display = 'none'
     }
 
     this.showIframe = function(url) {
@@ -46,6 +53,7 @@ window.AmbireSDK = function (opt = {}) {
         self.iframeElement.style.width = '320px'
         self.iframeElement.style.height = '600px'
         self.iframeElement.innerHTML = `<iframe src="`+ url +`" width="100%" height="100%" frameborder="0"/>`
+        self.iframeCloseButton.style.display = 'block'
     }
 
     this.openLogin = function() {
