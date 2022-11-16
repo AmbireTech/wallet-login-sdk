@@ -9,6 +9,8 @@ window.AmbireSDK = function (opt = {}) {
     this.addressElement = document.getElementById(opt.addressElementId ?? "ambire-sdk-wallet-address")
     this.sendTxnDiv = document.getElementById(opt.sendTxDivElementId ?? "ambire-sdk-send-transaction")
     this.sendTxnButton = document.getElementById(opt.sendTxButtonElementId ?? "ambire-sdk-send-transaction-btn")
+    this.signMsgDiv = document.getElementById(opt.signMsgDivElementId ?? "ambire-sdk-sign-message")
+    this.signMsgButton = document.getElementById(opt.sendTxButtonElementId ?? "ambire-sdk-sign-message-btn")
 
     // init
     const wallet = window.localStorage.getItem('wallet_address')
@@ -17,11 +19,13 @@ window.AmbireSDK = function (opt = {}) {
         this.connectButton.style.display = 'none'
         this.logoutButton.style.display = 'block'
         this.sendTxnDiv.style.display = 'block'
+        this.signMsgDiv.style.display = 'block'
     } else {
         this.addressElement.innerHTML = ''
         this.connectButton.style.display = 'block'
         this.logoutButton.style.display = 'none'
         this.sendTxnDiv.style.display = 'none'
+        this.signMsgDiv.style.display = 'none'
     }
     this.iframeCloseButton.style.display = 'none'
 
@@ -35,6 +39,10 @@ window.AmbireSDK = function (opt = {}) {
             inputs[1].value,
             inputs[2].value
         )
+    })
+    this.signMsgButton.addEventListener('click', function() {
+        const inputs = self.signMsgDiv.getElementsByTagName('input')
+        self.openSignMessage(inputs[0].value)
     })
     this.logoutButton.addEventListener('click', function() {
         self.logout()
@@ -64,8 +72,23 @@ window.AmbireSDK = function (opt = {}) {
         self.showIframe(opt.walletUrl + '/#/email-login-iframe')
     }
 
-    this.openSignMessage = function() {
+    this.openSignMessage = function(messageToSign) {
         // TODO
+
+        if (!messageToSign || typeof messageToSign !== 'string') {
+            return alert('Invalid input for message')
+        }
+        // convert string to hex
+        const msgInHex = '0x' + messageToSign.split('')
+            .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
+            .join('')
+        self.showIframe(`${opt.walletUrl}/#/sign-message-sdk/${msgInHex}`)
+
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl) return
+            if (e.data.type !== 'signClose') return
+            this.hideIframe()
+        }, false)
     }
 
     this.openSendTransaction = function(to, value, data) {
