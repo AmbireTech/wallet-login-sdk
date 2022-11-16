@@ -119,6 +119,7 @@ window.AmbireSDK = function (opt = {}) {
         self.addressElement.innerHTML = ''
         self.connectButton.style.display = 'block'
         self.sendTxnDiv.style.display = 'none'
+        self.signMsgDiv.style.display = 'none'
     }
 
     // emit event
@@ -144,6 +145,7 @@ window.AmbireSDK = function (opt = {}) {
             // console.log(`ambire login details: ${JSON.stringify(e.data)}`)
             self.addressElement.innerHTML = `Wallet address: ${e.data.address}`
             self.sendTxnDiv.style.display = 'block'
+            self.signMsgDiv.style.display = 'block'
             this.hideIframe()
             self.logoutButton.style.display = 'block'
             window.localStorage.setItem('wallet_address', e.data.address)
