@@ -136,19 +136,6 @@ window.AmbireSDK = function (opt = {}) {
         })
 
         window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl || e.data.type != 'openRamp') return
-
-            const timestamp = Date.now() // tested, correct timestamp
-            const address = e.data.address
-            const merchantCode = "xubo_test"
-            const networkCode = e.data.networkCode
-            const signature = e.data.signature
-
-            const onRampUrl = "https://www.binancecnt.com/en/pre-connect?merchantCode="+merchantCode+"&timestamp="+timestamp+"&cryptoAddress="+address+"&cryptoNetwork="+networkCode+"&signature="+signature
-            self.iframeElement.innerHTML = `<iframe src="`+ onRampUrl +`" width="100%" height="100%" frameborder="0"/>`
-        })
-
-        window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl || e.data.type != 'cancelRamp') return
 
             this.hideIframe()
