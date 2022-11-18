@@ -2,6 +2,7 @@ window.AmbireSDK = function (opt = {}) {
     const self = this
 
     this.dappName = opt.dappName ?? 'Unknown Dapp'
+    this.wrapperElement = document.getElementById(opt.wrapperElementId ?? "ambire-sdk-wrapper")
     this.iframeElement = document.getElementById(opt.iframeElementId ?? "ambire-sdk-iframe")
     this.iframeCloseButton = document.getElementById(opt.iframeCloseButtontId ?? "ambire-sdk-iframe-close")
     this.connectButton = document.getElementById(opt.connectButtonId ?? "ambire-sdk-connect-btn")
@@ -57,9 +58,19 @@ window.AmbireSDK = function (opt = {}) {
         self.iframeElement.style.pointerEvents = 'none'
 
         self.iframeCloseButton.style.display = 'none'
+
+        document.body.style.pointerEvents = 'auto'
+        self.wrapperElement.style.visibility = 'hidden'
+        self.wrapperElement.style.opacity = 0
+        self.wrapperElement.style.pointerEvents = 'auto'
     }
 
     this.showIframe = function(url) {
+        document.body.style.pointerEvents = 'none'
+        self.wrapperElement.style.visibility = 'visible'
+        self.wrapperElement.style.opacity = 1
+        self.wrapperElement.style.pointerEvents = 'none'
+
         self.iframeElement.style.width = '60%'
         self.iframeElement.style.height = '600px'
 
@@ -69,19 +80,17 @@ window.AmbireSDK = function (opt = {}) {
 
         self.iframeElement.innerHTML = `<iframe src="`+ url +`" width="100%" height="100%" frameborder="0"/>`
         self.iframeCloseButton.style.display = 'block'
+        self.iframeCloseButton.style.zIndex = 999
+        self.iframeCloseButton.style.pointerEvents = 'auto'
     }
 
     this.openLogin = function() {
-        // TODO
-
         // temp code
         self.connectButton.style.display = 'none'
         self.showIframe(opt.walletUrl + '/#/email-login-iframe')
     }
 
     this.openSignMessage = function(messageToSign) {
-        // TODO
-
         if (!messageToSign || typeof messageToSign !== 'string') {
             return alert('Invalid input for message')
         }
@@ -117,8 +126,6 @@ window.AmbireSDK = function (opt = {}) {
     }
 
     this.logout = function() {
-        // TODO
-
         if (!window.localStorage.getItem('wallet_address')) return
 
         window.localStorage.removeItem('wallet_address')

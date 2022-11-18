@@ -19,17 +19,26 @@
             pointer-events: none;
             transition: all 0.3s;
         }
-        .modal-window:target {
-            visibility: visible;
-            opacity: 1;
+        .sdk-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 998;
+            background-color: rgba(128,128,128,0.8);
+            visibility: hidden;
+            opacity: 0;
             pointer-events: auto;
         }
     </style>
 </head>
 <body>
     <h1>My Dapp</h1>
-    <div id="ambire-sdk-iframe" class="modal-window"></div>
-    <button id="ambire-sdk-iframe-close">Close iframe</button>
+    <div id="ambire-sdk-wrapper" class="sdk-overlay">
+        <div id="ambire-sdk-iframe" class="modal-window"></div>
+        <button id="ambire-sdk-iframe-close">Close iframe</button>
+    </div>
     <div>Dapp content here</div>
     <div id="wallet-address"></div>
     <button id="connect">Conenct via Email</button>
