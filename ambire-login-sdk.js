@@ -52,14 +52,21 @@ window.AmbireSDK = function (opt = {}) {
     })
 
     this.hideIframe = function() {
-        self.iframeElement.style.display = 'none'
+        self.iframeElement.style.visibility = 'hidden'
+        self.iframeElement.style.opacity = 0
+        self.iframeElement.style.pointerEvents = 'none'
+
         self.iframeCloseButton.style.display = 'none'
     }
 
     this.showIframe = function(url) {
-        self.iframeElement.style.display = 'block'
-        self.iframeElement.style.width = '320px'
+        self.iframeElement.style.width = '60%'
         self.iframeElement.style.height = '600px'
+
+        self.iframeElement.style.visibility = 'visible'
+        self.iframeElement.style.opacity = 1
+        self.iframeElement.style.pointerEvents = 'auto'
+
         self.iframeElement.innerHTML = `<iframe src="`+ url +`" width="100%" height="100%" frameborder="0"/>`
         self.iframeCloseButton.style.display = 'block'
     }
