@@ -129,7 +129,7 @@ window.AmbireSDK = function (opt = {}) {
         })
 
         window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl || e.data.type != 'cancelRamp') return
+            if (e.origin !== opt.walletUrl || e.data.type != 'finishRamp') return
 
             this.hideIframe()
         })
