@@ -6,47 +6,12 @@ window.AmbireSDK = function (opt = {}) {
     this.iframeElement = document.getElementById(opt.iframeElementId ?? "ambire-sdk-iframe")
     this.iframeCloseButton = document.getElementById(opt.iframeCloseButtontId ?? "ambire-sdk-iframe-close")
     this.connectButton = document.getElementById(opt.connectButtonId ?? "ambire-sdk-connect-btn")
-    this.logoutButton = document.getElementById(opt.logoutButtonId ?? "ambire-sdk-logout-btn")
-    this.addressElement = document.getElementById(opt.addressElementId ?? "ambire-sdk-wallet-address")
-    this.sendTxnDiv = document.getElementById(opt.sendTxDivElementId ?? "ambire-sdk-send-transaction")
-    this.sendTxnButton = document.getElementById(opt.sendTxButtonElementId ?? "ambire-sdk-send-transaction-btn")
-    this.signMsgDiv = document.getElementById(opt.signMsgDivElementId ?? "ambire-sdk-sign-message")
-    this.signMsgButton = document.getElementById(opt.sendTxButtonElementId ?? "ambire-sdk-sign-message-btn")
 
     // init
-    const wallet = window.localStorage.getItem('wallet_address')
-    if (wallet) {
-        this.addressElement.innerHTML = `Wallet address: ${wallet}`
-        this.connectButton.style.display = 'none'
-        this.logoutButton.style.display = 'block'
-        this.sendTxnDiv.style.display = 'block'
-        this.signMsgDiv.style.display = 'block'
-    } else {
-        this.addressElement.innerHTML = ''
-        this.connectButton.style.display = 'block'
-        this.logoutButton.style.display = 'none'
-        this.sendTxnDiv.style.display = 'none'
-        this.signMsgDiv.style.display = 'none'
-    }
     this.iframeCloseButton.style.display = 'none'
 
     this.connectButton.addEventListener('click', function() {
         self.openLogin()
-    })
-    this.sendTxnButton.addEventListener('click', function() {
-        const inputs = self.sendTxnDiv.getElementsByTagName('input')
-        self.openSendTransaction(
-            inputs[0].value,
-            inputs[1].value,
-            inputs[2].value
-        )
-    })
-    this.signMsgButton.addEventListener('click', function() {
-        const inputs = self.signMsgDiv.getElementsByTagName('input')
-        self.openSignMessage(inputs[0].value)
-    })
-    this.logoutButton.addEventListener('click', function() {
-        self.logout()
     })
     this.iframeCloseButton.addEventListener('click', function() {
         self.hideIframe()
@@ -86,7 +51,6 @@ window.AmbireSDK = function (opt = {}) {
 
     this.openLogin = function() {
         // temp code
-        self.connectButton.style.display = 'none'
         self.showIframe(opt.walletUrl + '/#/email-login-iframe')
     }
 
@@ -125,17 +89,6 @@ window.AmbireSDK = function (opt = {}) {
         }, false)
     }
 
-    this.logout = function() {
-        if (!window.localStorage.getItem('wallet_address')) return
-
-        window.localStorage.removeItem('wallet_address')
-        self.logoutButton.style.display = 'none'
-        self.addressElement.innerHTML = ''
-        self.connectButton.style.display = 'block'
-        self.sendTxnDiv.style.display = 'none'
-        self.signMsgDiv.style.display = 'none'
-    }
-
     // emit event
     this.emit = function(eventName, data = {}) {
         const event = new CustomEvent(eventName, { detail: { ...data }})
@@ -156,11 +109,7 @@ window.AmbireSDK = function (opt = {}) {
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl || e.data.type !== 'loginSuccess') return
 
-            self.addressElement.innerHTML = `Wallet address: ${e.data.address}`
-            self.sendTxnDiv.style.display = 'block'
-            self.signMsgDiv.style.display = 'block'
             this.hideIframe()
-            self.logoutButton.style.display = 'block'
             this.setAddress(e.data.address)
 
             callback(e.data.address)
@@ -172,8 +121,6 @@ window.AmbireSDK = function (opt = {}) {
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl || e.data.type != 'registrationSuccess') return
 
-            self.addressElement.innerHTML = `Wallet address: ${e.data.address}`
-            self.logoutButton.style.display = 'block'
             this.setAddress(e.data.address)
             const buyCrypto = opt.walletUrl + '/#/on-ramp-sdk/' + opt.chainID
             self.iframeElement.innerHTML = `<iframe src="`+ buyCrypto +`" width="100%" height="100%" frameborder="0"/>`
