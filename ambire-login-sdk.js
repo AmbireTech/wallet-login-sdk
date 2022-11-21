@@ -151,30 +151,44 @@ window.AmbireSDK = function (opt = {}) {
         })
     }
 
-    this.handleMessage = function(callback) {
+    // ambire-login-success listener
+    this.onLoginSuccess = function(callback) {
         window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl) return
-            if (e.data.type !== 'loginSuccess') return
+            if (e.origin !== opt.walletUrl || e.data.type !== 'loginSuccess') return
 
-            // console.log(`ambire login details: ${JSON.stringify(e.data)}`)
             self.addressElement.innerHTML = `Wallet address: ${e.data.address}`
             self.sendTxnDiv.style.display = 'block'
             self.signMsgDiv.style.display = 'block'
             this.hideIframe()
             self.logoutButton.style.display = 'block'
-            window.localStorage.setItem('wallet_address', e.data.address)
+            this.setAddress(e.data.address)
 
             callback(e.data.address)
-        }, false)
-    }
-
-    // ambire-login-success listener
-    this.onLoginSuccess = function(callback) {
-        this.handleMessage(callback)
+        })
     }
 
     // ambire-registration-success listener
     this.onRegistrationSuccess = function(callback) {
-        this.handleMessage(callback)
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type != 'registrationSuccess') return
+
+            self.addressElement.innerHTML = `Wallet address: ${e.data.address}`
+            self.logoutButton.style.display = 'block'
+            this.setAddress(e.data.address)
+            const buyCrypto = opt.walletUrl + '/#/on-ramp-sdk/' + opt.chainID
+            self.iframeElement.innerHTML = `<iframe src="`+ buyCrypto +`" width="100%" height="100%" frameborder="0"/>`
+
+            callback(e.data.address)
+        })
+
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type != 'cancelRamp') return
+
+            this.hideIframe()
+        })
+    }
+
+    this.setAddress = function(address) {
+        window.localStorage.setItem('wallet_address', address)
     }
 }

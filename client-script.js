@@ -1,6 +1,7 @@
 const sdk = new window.AmbireSDK({
     walletUrl: 'http://localhost:3000',
     dappName: 'dapp1',
+    chainID: 1,
     iframeElementId: 'ambire-sdk-iframe',
     connectButtonId: 'connect',
     logoutButtonId: 'logout',
