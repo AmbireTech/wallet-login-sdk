@@ -4,25 +4,14 @@ window.AmbireSDK = function (opt = {}) {
     this.dappName = opt.dappName ?? 'Unknown Dapp'
     this.wrapperElement = document.getElementById(opt.wrapperElementId ?? "ambire-sdk-wrapper")
     this.iframeElement = document.getElementById(opt.iframeElementId ?? "ambire-sdk-iframe")
-    this.iframeCloseButton = document.getElementById(opt.iframeCloseButtontId ?? "ambire-sdk-iframe-close")
     this.connectButton = document.getElementById(opt.connectButtonId ?? "ambire-sdk-connect-btn")
-
-    // init
-    this.iframeCloseButton.style.display = 'none'
-
-    this.connectButton.addEventListener('click', function() {
-        self.openLogin()
-    })
-    this.iframeCloseButton.addEventListener('click', function() {
-        self.hideIframe()
-    })
 
     this.hideIframe = function() {
         self.iframeElement.style.visibility = 'hidden'
         self.iframeElement.style.opacity = 0
         self.iframeElement.style.pointerEvents = 'none'
 
-        self.iframeCloseButton.style.display = 'none'
+        document.getElementById('ambire-sdk-iframe-close').remove();
 
         document.body.style.pointerEvents = 'auto'
         self.wrapperElement.style.visibility = 'hidden'
@@ -44,9 +33,17 @@ window.AmbireSDK = function (opt = {}) {
         self.iframeElement.style.pointerEvents = 'auto'
 
         self.iframeElement.innerHTML = `<iframe src="`+ url +`" width="100%" height="100%" frameborder="0"/>`
-        self.iframeCloseButton.style.display = 'block'
-        self.iframeCloseButton.style.zIndex = 999
-        self.iframeCloseButton.style.pointerEvents = 'auto'
+
+        // create a button
+        let btn = document.createElement("button");
+        btn.innerHTML = "Close iframe";
+        btn.setAttribute('id', 'ambire-sdk-iframe-close')
+        document.getElementById('ambire-sdk-wrapper').appendChild(btn);
+        btn.addEventListener('click', function() {
+            self.hideIframe()
+        })
+        btn.style.zIndex = 999
+        btn.style.pointerEvents = 'auto'
     }
 
     this.openLogin = function() {
@@ -138,4 +135,14 @@ window.AmbireSDK = function (opt = {}) {
     this.setAddress = function(address) {
         window.localStorage.setItem('wallet_address', address)
     }
+
+    // handlers
+    window.addEventListener('keyup', function(e) {
+        if (e.key == 'Escape') {
+            self.hideIframe()
+        }
+    })
+    this.connectButton.addEventListener('click', function() {
+        self.openLogin()
+    })
 }
