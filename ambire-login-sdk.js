@@ -5,13 +5,14 @@ window.AmbireSDK = function (opt = {}) {
     this.wrapperElement = document.getElementById(opt.wrapperElementId ?? "ambire-sdk-wrapper")
     this.iframeElement = document.getElementById(opt.iframeElementId ?? "ambire-sdk-iframe")
     this.connectButton = document.getElementById(opt.connectButtonId ?? "ambire-sdk-connect-btn")
+    this.closeButton = document.getElementById(opt.closeButtonId ?? "ambire-sdk-iframe-close")
 
     this.hideIframe = function() {
         self.iframeElement.style.visibility = 'hidden'
         self.iframeElement.style.opacity = 0
         self.iframeElement.style.pointerEvents = 'none'
 
-        document.getElementById('ambire-sdk-iframe-close').remove();
+        this.closeButton.style.display = 'none'
 
         document.body.style.pointerEvents = 'auto'
         self.wrapperElement.style.visibility = 'hidden'
@@ -34,16 +35,9 @@ window.AmbireSDK = function (opt = {}) {
 
         self.iframeElement.innerHTML = `<iframe src="`+ url +`" width="100%" height="100%" frameborder="0"/>`
 
-        // create a button
-        let btn = document.createElement("button");
-        btn.innerHTML = "Close iframe";
-        btn.setAttribute('id', 'ambire-sdk-iframe-close')
-        document.getElementById('ambire-sdk-wrapper').appendChild(btn);
-        btn.addEventListener('click', function() {
-            self.hideIframe()
-        })
-        btn.style.zIndex = 999
-        btn.style.pointerEvents = 'auto'
+        this.closeButton.style.display = 'block'
+        this.closeButton.style.zIndex = 999
+        this.closeButton.style.pointerEvents = 'auto'
     }
 
     this.openLogin = function() {
@@ -107,8 +101,6 @@ window.AmbireSDK = function (opt = {}) {
             if (e.origin !== opt.walletUrl || e.data.type !== 'loginSuccess') return
 
             this.hideIframe()
-            this.setAddress(e.data.address)
-
             callback(e.data.address)
         })
     }
@@ -118,10 +110,8 @@ window.AmbireSDK = function (opt = {}) {
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl || e.data.type != 'registrationSuccess') return
 
-            this.setAddress(e.data.address)
             const buyCrypto = opt.walletUrl + '/#/on-ramp-sdk/' + opt.chainID
             self.iframeElement.innerHTML = `<iframe src="`+ buyCrypto +`" width="100%" height="100%" frameborder="0"/>`
-
             callback(e.data.address)
         })
 
@@ -132,10 +122,6 @@ window.AmbireSDK = function (opt = {}) {
         })
     }
 
-    this.setAddress = function(address) {
-        window.localStorage.setItem('wallet_address', address)
-    }
-
     // handlers
     window.addEventListener('keyup', function(e) {
         if (e.key == 'Escape') {
@@ -144,5 +130,8 @@ window.AmbireSDK = function (opt = {}) {
     })
     this.connectButton.addEventListener('click', function() {
         self.openLogin()
+    })
+    this.closeButton.addEventListener('click', function() {
+        self.hideIframe()
     })
 }

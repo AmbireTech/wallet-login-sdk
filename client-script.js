@@ -38,6 +38,14 @@ hideMsgDiv = function() {
     $signMsgDiv.style.display = 'none'
 }
 
+// use the local storage to set and remove address
+setAddress = function(address) {
+    window.localStorage.setItem('wallet_address', address)
+}
+removeAddress = function() {
+    window.localStorage.removeItem('wallet_address')
+}
+
 const sdk = new window.AmbireSDK({
     walletUrl: 'http://localhost:3000',
     dappName: 'dapp1',
@@ -67,12 +75,12 @@ $logoutButton.addEventListener('click', function() {
 logout = function() {
     if (!window.localStorage.getItem('wallet_address')) return
 
-    window.localStorage.removeItem('wallet_address')
     hideLogout()
     hideAddress()
     showConnect()
     hideTxnDiv()
     hideMsgDiv()
+    removeAddress()
 }
 
 sdk.onLoginSuccess(function(address) {
@@ -81,6 +89,7 @@ sdk.onLoginSuccess(function(address) {
     hideConnect()
     showTxnDiv()
     showMsgDiv()
+    setAddress(address)
 })
 sdk.onRegistrationSuccess(function(address) {
     showLogout()
@@ -88,6 +97,7 @@ sdk.onRegistrationSuccess(function(address) {
     hideConnect()
     showTxnDiv()
     showMsgDiv()
+    setAddress(address)
 })
 
 // send transaction
