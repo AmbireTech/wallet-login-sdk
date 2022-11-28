@@ -12,7 +12,7 @@ window.AmbireSDK = function (opt = {}) {
         self.iframeElement.style.opacity = 0
         self.iframeElement.style.pointerEvents = 'none'
 
-        this.closeButton.style.display = 'none'
+        self.closeButton.style.display = 'none'
 
         document.body.style.pointerEvents = 'auto'
         self.wrapperElement.style.visibility = 'hidden'
@@ -35,9 +35,9 @@ window.AmbireSDK = function (opt = {}) {
 
         self.iframeElement.innerHTML = `<iframe src="`+ url +`" width="100%" height="100%" frameborder="0"/>`
 
-        this.closeButton.style.display = 'block'
-        this.closeButton.style.zIndex = 999
-        this.closeButton.style.pointerEvents = 'auto'
+        self.closeButton.style.display = 'block'
+        self.closeButton.style.zIndex = 999
+        self.closeButton.style.pointerEvents = 'auto'
     }
 
     this.openLogin = function() {
@@ -58,7 +58,7 @@ window.AmbireSDK = function (opt = {}) {
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl) return
             if (e.data.type !== 'signClose') return
-            this.hideIframe()
+            self.hideIframe()
         }, false)
     }
 
@@ -76,7 +76,7 @@ window.AmbireSDK = function (opt = {}) {
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl) return
             if (e.data.type !== 'signClose') return
-            this.hideIframe()
+            self.hideIframe()
         }, false)
     }
 
@@ -100,7 +100,7 @@ window.AmbireSDK = function (opt = {}) {
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl || e.data.type !== 'loginSuccess') return
 
-            this.hideIframe()
+            self.hideIframe()
             callback(e.data.address)
         })
     }
@@ -118,7 +118,7 @@ window.AmbireSDK = function (opt = {}) {
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl || e.data.type != 'finishRamp') return
 
-            this.hideIframe()
+            self.hideIframe()
         })
     }
 
