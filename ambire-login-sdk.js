@@ -45,15 +45,22 @@ window.AmbireSDK = function (opt = {}) {
         self.showIframe(opt.walletUrl + '/#/email-login-iframe')
     }
 
-    this.openSignMessage = function(messageToSign) {
-        if (!messageToSign || typeof messageToSign !== 'string') {
-            return alert('Invalid input for message')
+    this.openSignMessage = function(type, messageToSign) {
+        if (type === 'personal_sign') {
+            if (!messageToSign || typeof messageToSign !== 'string') {
+                return alert('Invalid input for message')
+            }
+            // convert string to hex
+            messageToSign = '0x' + messageToSign.split('')
+                .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
+                .join('')
+        } else if (type === 'eth_signTypedData_v4') {
+            //
+        } else {
+            return alert('Invalid sign type')
         }
-        // convert string to hex
-        const msgInHex = '0x' + messageToSign.split('')
-            .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
-            .join('')
-        self.showIframe(`${opt.walletUrl}/#/sign-message-sdk/${msgInHex}`)
+
+        self.showIframe(`${opt.walletUrl}/#/sign-message-sdk/${type}/${messageToSign}`)
 
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl) return

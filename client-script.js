@@ -113,5 +113,6 @@ $sendTxnButton.addEventListener('click', function() {
 // sign a message
 $signMsgButton.addEventListener('click', function() {
     const inputs = $signMsgDiv.getElementsByTagName('input')
-    sdk.openSignMessage(inputs[0].value)
+    const dropdowns = $signMsgDiv.getElementsByTagName('select')
+    sdk.openSignMessage(dropdowns[0].value, inputs[0].value)
 })
