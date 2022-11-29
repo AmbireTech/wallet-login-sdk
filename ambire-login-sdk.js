@@ -50,12 +50,14 @@ window.AmbireSDK = function (opt = {}) {
             if (!messageToSign || typeof messageToSign !== 'string') {
                 return alert('Invalid input for message')
             }
+
             // convert string to hex
             messageToSign = '0x' + messageToSign.split('')
                 .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
                 .join('')
-        } else if (type === 'eth_signTypedData_v4') {
-            //
+        } else if (type === 'eth_signTypedData') {
+            messageToSign = encodeURIComponent(JSON.stringify(messageToSign))
+            console.log(`msg (stringified): ${messageToSign}`)
         } else {
             return alert('Invalid sign type')
         }

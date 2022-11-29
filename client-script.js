@@ -114,5 +114,47 @@ $sendTxnButton.addEventListener('click', function() {
 $signMsgButton.addEventListener('click', function() {
     const inputs = $signMsgDiv.getElementsByTagName('input')
     const dropdowns = $signMsgDiv.getElementsByTagName('select')
-    sdk.openSignMessage(dropdowns[0].value, inputs[0].value)
+
+    const signType = dropdowns[0].value
+    let message = inputs[0].value
+
+    if (signType === 'eth_signTypedData') {
+        // temp dummy typed message
+        message = {
+            domain: {
+                name: "My example Dapp",
+                chainId: 137
+            },
+            types: {
+                "MessageType1": [
+                    {
+                        name: "from",
+                        type: "address"
+                    },
+                    {
+                        name: "to",
+                        type: "address"
+                    },
+                    {
+                        name: "value",
+                        type: "uint256"
+                    },
+                    // {
+                    //     name: "text",
+                    //     type: "string"
+                    // }
+                ]
+            },
+            primaryType: "MessageType1",
+            message: {
+                from: "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
+                to: "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC",
+                value: 12345,
+                // text: message
+            }
+        }
+    }
+console.log(`sign type: ${signType}`)
+console.log(`msg: ${message}`)
+    sdk.openSignMessage(signType, message)
 })
