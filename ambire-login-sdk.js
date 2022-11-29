@@ -57,7 +57,6 @@ window.AmbireSDK = function (opt = {}) {
                 .join('')
         } else if (type === 'eth_signTypedData') {
             messageToSign = encodeURIComponent(JSON.stringify(messageToSign))
-            console.log(`msg (stringified): ${messageToSign}`)
         } else {
             return alert('Invalid sign type')
         }

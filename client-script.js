@@ -139,10 +139,10 @@ $signMsgButton.addEventListener('click', function() {
                         name: "value",
                         type: "uint256"
                     },
-                    // {
-                    //     name: "text",
-                    //     type: "string"
-                    // }
+                    {
+                        name: "text",
+                        type: "string"
+                    }
                 ]
             },
             primaryType: "MessageType1",
@@ -150,11 +150,10 @@ $signMsgButton.addEventListener('click', function() {
                 from: "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
                 to: "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC",
                 value: 12345,
-                // text: message
+                text: message
             }
         }
     }
-console.log(`sign type: ${signType}`)
-console.log(`msg: ${message}`)
+
     sdk.openSignMessage(signType, message)
 })
