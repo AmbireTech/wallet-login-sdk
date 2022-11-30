@@ -52,7 +52,8 @@ window.AmbireSDK = function (opt = {}) {
             if (typeof messageToSign !== 'string') {
                 return alert('Invalid input for message')
             }
-        } else if (type === 'personal_sign') {
+        }
+        else if (type === 'personal_sign') {
             if (typeof messageToSign !== 'string') {
                 return alert('Invalid input for message')
             }
@@ -61,9 +62,11 @@ window.AmbireSDK = function (opt = {}) {
             messageToSign = '0x' + messageToSign.split('')
                 .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
                 .join('')
-        } else if (type === 'eth_signTypedData') {
+        }
+        else if (['eth_signTypedData', 'eth_signTypedData_v4'].includes(type)) {
             messageToSign = encodeURIComponent(JSON.stringify(messageToSign))
-        } else {
+        }
+        else {
             return alert('Invalid sign type')
         }
 
