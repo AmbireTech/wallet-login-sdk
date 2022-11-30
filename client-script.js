@@ -51,7 +51,6 @@ const sdk = new window.AmbireSDK({
     dappName: 'dapp1',
     chainID: 1,
     iframeElementId: 'ambire-sdk-iframe',
-    connectButtonId: $connectBtnId
 })
 
 const wallet = window.localStorage.getItem('wallet_address')
@@ -156,4 +155,8 @@ $signMsgButton.addEventListener('click', function() {
     }
 
     sdk.openSignMessage(signType, message)
+})
+
+$connectButton.addEventListener('click', function() {
+    sdk.openLogin()
 })

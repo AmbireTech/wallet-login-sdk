@@ -4,7 +4,6 @@ window.AmbireSDK = function (opt = {}) {
     this.dappName = opt.dappName ?? 'Unknown Dapp'
     this.wrapperElement = document.getElementById(opt.wrapperElementId ?? "ambire-sdk-wrapper")
     this.iframeElement = document.getElementById(opt.iframeElementId ?? "ambire-sdk-iframe")
-    this.connectButton = document.getElementById(opt.connectButtonId ?? "ambire-sdk-connect-btn")
     this.closeButton = document.getElementById(opt.closeButtonId ?? "ambire-sdk-iframe-close")
 
     this.hideIframe = function() {
@@ -36,7 +35,8 @@ window.AmbireSDK = function (opt = {}) {
         self.iframeElement.innerHTML = `<iframe src="`+ url +`" width="100%" height="100%" frameborder="0"/>`
 
         self.closeButton.style.display = 'block'
-        self.closeButton.style.zIndex = 999
+        self.wrapperElement.style.zIndex = 9999
+        self.closeButton.style.zIndex = 9999
         self.closeButton.style.pointerEvents = 'auto'
     }
 
@@ -135,9 +135,6 @@ window.AmbireSDK = function (opt = {}) {
         if (e.key == 'Escape') {
             self.hideIframe()
         }
-    })
-    this.connectButton.addEventListener('click', function() {
-        self.openLogin()
     })
     this.closeButton.addEventListener('click', function() {
         self.hideIframe()
