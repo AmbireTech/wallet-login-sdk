@@ -46,8 +46,14 @@ window.AmbireSDK = function (opt = {}) {
     }
 
     this.openSignMessage = function(type, messageToSign) {
-        if (type === 'personal_sign') {
-            if (!messageToSign || typeof messageToSign !== 'string') {
+        if (!messageToSign) return alert('Invalid input for message')
+
+        if (type === 'eth_sign') {
+            if (typeof messageToSign !== 'string') {
+                return alert('Invalid input for message')
+            }
+        } else if (type === 'personal_sign') {
+            if (typeof messageToSign !== 'string') {
                 return alert('Invalid input for message')
             }
 
