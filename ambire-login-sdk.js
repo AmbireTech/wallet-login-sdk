@@ -40,9 +40,9 @@ window.AmbireSDK = function (opt = {}) {
         self.closeButton.style.pointerEvents = 'auto'
     }
 
-    this.openLogin = function() {
-        // temp code
-        self.showIframe(opt.walletUrl + '/#/email-login-iframe')
+    this.openLogin = function (chainInfo = null) {
+        const chainIdParam = chainInfo ? '?chainId=' + chainInfo.chainId : ''
+        self.showIframe(opt.walletUrl + '/#/email-login-iframe' + chainIdParam)
     }
 
     this.openSignMessage = function(type, messageToSign) {
