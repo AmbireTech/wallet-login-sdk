@@ -117,7 +117,7 @@ $signMsgButton.addEventListener('click', function() {
     const signType = dropdowns[0].value
     let message = inputs[0].value
 
-    if (signType === 'eth_signTypedData') {
+    if (['eth_signTypedData', 'eth_signTypedData_v4'].includes(signType)) {
         // temp dummy typed message
         message = {
             domain: {
