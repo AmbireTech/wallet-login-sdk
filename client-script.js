@@ -82,21 +82,21 @@ logout = function() {
     removeAddress()
 }
 
-sdk.onLoginSuccess(function(address) {
+sdk.onLoginSuccess(function(data) {
     showLogout()
-    showAddress(address)
+    showAddress(data.address)
     hideConnect()
     showTxnDiv()
     showMsgDiv()
-    setAddress(address)
+    setAddress(data.address)
 })
-sdk.onRegistrationSuccess(function(address) {
+sdk.onRegistrationSuccess(function(data) {
     showLogout()
-    showAddress(address)
+    showAddress(data.address)
     hideConnect()
     showTxnDiv()
     showMsgDiv()
-    setAddress(address)
+    setAddress(data.address)
 })
 
 // send transaction

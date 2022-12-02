@@ -109,7 +109,7 @@ window.AmbireSDK = function (opt = {}) {
             if (e.origin !== opt.walletUrl || e.data.type !== 'loginSuccess') return
 
             self.hideIframe()
-            callback(e.data.address)
+            callback(e.data)
         })
     }
 
@@ -120,7 +120,7 @@ window.AmbireSDK = function (opt = {}) {
 
             const buyCrypto = opt.walletUrl + '/#/on-ramp-sdk/' + opt.chainID
             self.iframeElement.innerHTML = `<iframe src="`+ buyCrypto +`" width="100%" height="100%" frameborder="0"/>`
-            callback(e.data.address)
+            callback(e.data)
         })
 
         window.addEventListener('message', (e) => {
