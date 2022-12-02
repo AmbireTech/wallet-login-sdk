@@ -42,7 +42,7 @@ window.AmbireSDK = function (opt = {}) {
 
     this.openLogin = function (chainInfo = null) {
         const chainIdParam = chainInfo ? '?chainId=' + chainInfo.chainId : ''
-        self.showIframe(opt.walletUrl + '/#/email-login-iframe' + chainIdParam)
+        self.showIframe(opt.walletUrl + '/#/sdk/email-login' + chainIdParam)
     }
 
     this.openSignMessage = function(type, messageToSign) {
@@ -70,7 +70,7 @@ window.AmbireSDK = function (opt = {}) {
             return alert('Invalid sign type')
         }
 
-        self.showIframe(`${opt.walletUrl}/#/sign-message-sdk/${type}/${messageToSign}`)
+        self.showIframe(`${opt.walletUrl}/#/sdk/sign-message/${type}/${messageToSign}`)
 
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl) return
@@ -88,7 +88,7 @@ window.AmbireSDK = function (opt = {}) {
         ) {
             return alert('Invalid txn input data')
         }
-        self.showIframe(`${opt.walletUrl}/#/send-transaction-sdk/${to}/${value}/${data}`)
+        self.showIframe(`${opt.walletUrl}/#/sdk/send-transaction/${to}/${value}/${data}`)
 
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl) return
@@ -127,7 +127,7 @@ window.AmbireSDK = function (opt = {}) {
         window.addEventListener('message', (e) => {
             if (e.origin !== opt.walletUrl || e.data.type != 'registrationSuccess') return
 
-            const buyCrypto = opt.walletUrl + '/#/on-ramp-sdk/' + opt.chainID
+            const buyCrypto = opt.walletUrl + '/#/sdk/on-ramp/' + opt.chainID
             self.iframeElement.innerHTML = `<iframe src="`+ buyCrypto +`" width="100%" height="100%" frameborder="0"/>`
             callback(e.data)
         })
