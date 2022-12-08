@@ -71,12 +71,6 @@ window.AmbireSDK = function (opt = {}) {
         }
 
         self.showIframe(`${opt.walletUrl}/#/sdk/sign-message/${type}/${messageToSign}`)
-
-        window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl) return
-            if (e.data.type !== 'signClose') return
-            self.hideIframe()
-        }, false)
     }
 
     this.openSendTransaction = function(to, value, data) {
@@ -89,12 +83,6 @@ window.AmbireSDK = function (opt = {}) {
             return alert('Invalid txn input data')
         }
         self.showIframe(`${opt.walletUrl}/#/sdk/send-transaction/${to}/${value}/${data}`)
-
-        window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl) return
-            if (e.data.type !== 'signClose') return
-            self.hideIframe()
-        }, false)
     }
 
     // emit event
@@ -136,6 +124,42 @@ window.AmbireSDK = function (opt = {}) {
             if (e.origin !== opt.walletUrl || e.data.type != 'finishRamp') return
 
             self.hideIframe()
+        })
+    }
+
+    this.onMsgRejected = function(callback) {
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type !== 'msgRejected') return
+
+            self.hideIframe()
+            callback(e.data)
+        })
+    }
+
+    this.onMsgSigned = function(callback) {
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type !== 'msgSigned') return
+
+            self.hideIframe()
+            callback(e.data)
+        })
+    }
+
+    this.onTxnRejected = function(callback) {
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type !== 'txnRejected') return
+
+            self.hideIframe()
+            callback(e.data)
+        })
+    }
+
+    this.onTxnSent = function(callback) {
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type !== 'txnSent') return
+
+            self.hideIframe()
+            callback(e.data)
         })
     }
 

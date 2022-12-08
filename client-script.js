@@ -98,6 +98,18 @@ sdk.onRegistrationSuccess(function(data) {
     showMsgDiv()
     setAddress(data.address)
 })
+sdk.onMsgRejected(function() {
+    console.log('just subscribing to reject msg')
+})
+sdk.onMsgSigned(function() {
+    console.log('just subscribing to sign msg')
+})
+sdk.onTxnRejected(function() {
+    console.log('just subscribing to reject txn')
+})
+sdk.onTxnSent(function() {
+    console.log('just subscribing to send txn')
+})
 
 // send transaction
 $sendTxnButton.addEventListener('click', function() {
