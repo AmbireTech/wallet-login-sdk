@@ -53,21 +53,21 @@ window.AmbireSDK = function (opt = {}) {
             if (typeof messageToSign !== 'string') {
                 return alert('Invalid input for message')
             }
-        }
-        else if (type === 'personal_sign') {
+        } else if (type === 'personal_sign') {
             if (typeof messageToSign !== 'string') {
                 return alert('Invalid input for message')
             }
 
             // convert string to hex
-            messageToSign = '0x' + messageToSign.split('')
-                .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
-                .join('')
-        }
-        else if (['eth_signTypedData', 'eth_signTypedData_v4'].includes(type)) {
+            messageToSign =
+                '0x' +
+                messageToSign
+                    .split('')
+                    .map((c) => c.charCodeAt(0).toString(16).padStart(2, '0'))
+                    .join('')
+        } else if (['eth_signTypedData', 'eth_signTypedData_v4'].includes(type)) {
             messageToSign = encodeURIComponent(JSON.stringify(messageToSign))
-        }
-        else {
+        } else {
             return alert('Invalid sign type')
         }
 
@@ -75,12 +75,7 @@ window.AmbireSDK = function (opt = {}) {
     }
 
     this.openSendTransaction = function(to, value, data) {
-        if (
-            !to || !value || !data
-            || typeof to !== 'string'
-            || typeof value !== 'string'
-            || typeof data !== 'string'
-        ) {
+        if (!to || !value || !data || typeof to !== 'string' || typeof value !== 'string' || typeof data !== 'string') {
             return alert('Invalid txn input data')
         }
         self.showIframe(`${opt.walletUrl}/#/sdk/send-transaction/${to}/${value}/${data}`)
