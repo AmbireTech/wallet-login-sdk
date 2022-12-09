@@ -101,6 +101,15 @@ window.AmbireSDK = function (opt = {}) {
         })
     }
 
+    this.onAlreadyLoggedIn = function (callback) {
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type !== 'alreadyLoggedIn') return
+
+            self.hideIframe()
+            callback(e.data)
+        })
+    }
+
     // ambire-login-success listener
     this.onLoginSuccess = function(callback) {
         window.addEventListener('message', (e) => {
