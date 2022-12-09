@@ -46,6 +46,11 @@ window.AmbireSDK = function (opt = {}) {
         self.showIframe(opt.walletUrl + '/#/sdk/email-login' + query)
     }
 
+    this.openLogout = function () {
+        let query = `?dappOrigin=${window.location.origin}`
+        self.showIframe(opt.walletUrl + '/#/sdk/logout' + query)
+    }
+
     this.openSignMessage = function(type, messageToSign) {
         if (!messageToSign) return alert('Invalid input for message')
 
@@ -129,6 +134,15 @@ window.AmbireSDK = function (opt = {}) {
             if (e.origin !== opt.walletUrl || e.data.type != 'finishRamp') return
 
             self.hideIframe()
+        })
+    }
+
+    this.onLogoutSuccess = function(callback) {
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type !== 'logoutSuccess') return
+
+            self.hideIframe()
+            callback(e.data)
         })
     }
 

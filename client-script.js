@@ -74,13 +74,17 @@ $logoutButton.addEventListener('click', function() {
 logout = function() {
     if (!window.localStorage.getItem('wallet_address')) return
 
+    sdk.openLogout()
+}
+
+sdk.onLogoutSuccess(function() {
     hideLogout()
     hideAddress()
     showConnect()
     hideTxnDiv()
     hideMsgDiv()
     removeAddress()
-}
+})
 
 sdk.onLoginSuccess(function(data) {
     showLogout()
