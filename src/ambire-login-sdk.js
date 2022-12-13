@@ -182,6 +182,15 @@ window.AmbireSDK = function (opt = {}) {
         })
     }
 
+    this.onActionRejected = function(callback) {
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type !== 'actionRejected') return
+
+            self.hideIframe()
+            callback(e.data)
+        })
+    }
+
     // handlers
     window.addEventListener('keyup', function(e) {
         if (e.key == 'Escape') {
