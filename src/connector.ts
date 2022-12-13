@@ -15,7 +15,7 @@ export class AmbireWallet extends Connector {
     this.actions.startActivation()
     this._sdk.openLogin(chainInfo)
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this._sdk.onAlreadyLoggedIn((data: any) => {
         const activeChainId = chainInfo ? parseInt(chainInfo.chainId) : parseInt(data.chainId)
         this.customProvider = this.getProvider(data.address, data.providerUrl)
@@ -40,7 +40,7 @@ export class AmbireWallet extends Connector {
   deactivate(): Promise<void> | void {
     this._sdk.openLogout()
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this._sdk.onLogoutSuccess(() => {
         this.customProvider = null
         this.actions.resetState()
@@ -97,7 +97,7 @@ class AmbireProvider extends JsonRpcProvider {
         if (prop === 'connectUnchecked') {
           const value = target[prop]
           if (value instanceof Function) {
-            return function (...args: any) {
+            return function () {
               return new Proxy(signer, handler1)
             }
           }
@@ -130,7 +130,7 @@ class AmbireProvider extends JsonRpcProvider {
     this._sdk.openSignMessage(type, message)
 
     return new Promise((resolve, reject) => {
-      this._sdk.msgSigned((data: any) => {
+      this._sdk.msgSigned(() => {
         return resolve(args[0])
       })
       this._sdk.onMsgRejected(() => {

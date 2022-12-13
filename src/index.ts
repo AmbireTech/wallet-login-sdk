@@ -1,0 +1,1 @@
+export { AmbireWallet } from './connector'
