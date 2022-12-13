@@ -1,0 +1,26 @@
+{
+  "name": "ambire-login-sdk",
+  "version": "1.0.0",
+  "description": "a tool for login via the ambire wallet",
+  "main": "ambire-login-sdk.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmbireTech/wallet-login-sdk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AmbireTech/wallet-login-sdk/issues"
+  },
+  "homepage": "https://github.com/AmbireTech/wallet-login-sdk#readme",
+  "dependencies": {
+    "@ethersproject/networks": "^5.7.1",
+    "@ethersproject/providers": "^5.7.2",
+    "@ethersproject/web": "^5.7.1",
+    "@web3-react/core": "8.0.35-beta.0",
+    "@web3-react/types": "8.0.20-beta.0"
+  }
+}
