@@ -40,7 +40,7 @@ class AmbireWallet extends Connector {
   activate(chainInfo) {
     this.actions.startActivation();
     this._sdk.openLogin(chainInfo);
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       this._sdk.onAlreadyLoggedIn(data => {
         var activeChainId = chainInfo ? parseInt(chainInfo.chainId) : parseInt(data.chainId);
         this.customProvider = this.getProvider(data.address, data.providerUrl);
@@ -67,6 +67,18 @@ class AmbireWallet extends Connector {
           accounts: [data.address]
         });
         resolve();
+      });
+      this._sdk.onActionRejected(data => {
+        var activeChainId = parseInt(data.chainId);
+        this.customProvider = this.getProvider(data.address, data.providerUrl);
+        this.actions.update({
+          chainId: activeChainId,
+          accounts: [data.address]
+        });
+        reject({
+          code: 4001,
+          message: 'User rejected the request.'
+        });
       });
     });
   }
