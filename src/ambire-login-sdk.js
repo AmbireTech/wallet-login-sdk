@@ -64,9 +64,9 @@ window.AmbireSDK = function (opt = {}) {
             }
 
             // convert string to hex
-            messageToSign =
-                '0x' +
-                messageToSign
+            messageToSign = messageToSign.match(/^0x[0-9A-Fa-f]+$/g)
+                ? messageToSign
+                : '0x' + messageToSign
                     .split('')
                     .map((c) => c.charCodeAt(0).toString(16).padStart(2, '0'))
                     .join('')
