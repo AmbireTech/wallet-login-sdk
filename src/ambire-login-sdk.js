@@ -71,7 +71,10 @@ window.AmbireSDK = function (opt = {}) {
                     .map((c) => c.charCodeAt(0).toString(16).padStart(2, '0'))
                     .join('')
         } else if (['eth_signTypedData', 'eth_signTypedData_v4'].includes(type)) {
-            messageToSign = encodeURIComponent(JSON.stringify(messageToSign))
+            messageToSign = typeof messageToSign === 'string'
+                ? messageToSign
+                : JSON.stringify(messageToSign)
+            messageToSign = encodeURIComponent(messageToSign)
         } else {
             return alert('Invalid sign type')
         }
