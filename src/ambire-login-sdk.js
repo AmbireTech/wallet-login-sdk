@@ -41,7 +41,7 @@ window.AmbireSDK = function (opt = {}) {
     }
 
     this.openLogin = function (chainInfo = null) {
-        let query = `?dappOrigin=${window.location.origin}`
+        let query = `?dappOrigin=${window.location.origin}&dappName=${self.dappName}`
         query = chainInfo ? `${query}&chainId=${chainInfo.chainId}` : query
         self.showIframe(opt.walletUrl + '/#/sdk/email-login' + query)
     }
