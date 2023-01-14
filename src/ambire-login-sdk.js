@@ -5,6 +5,8 @@ window.AmbireSDK = function (opt = {}) {
     this.dappIconPath = opt.dappIconPath ?? ''
     this.wrapperElement = document.getElementById(opt.wrapperElementId ?? 'ambire-sdk-wrapper')
 
+    this.iframe = null
+
     this.hideIframe = function () {
       document.body.style.pointerEvents = 'auto'
 
@@ -24,13 +26,13 @@ window.AmbireSDK = function (opt = {}) {
 
       self.wrapperElement.classList.add('visible')
 
-      const iframe = document.createElement('iframe')
+      self.iframe = document.createElement('iframe')
 
-      iframe.src = url
-      iframe.width = '380px'
-      iframe.height = '600px'
-      iframe.id = 'ambire-sdk-iframe'
-      self.wrapperElement.appendChild(iframe)
+      self.iframe.src = url
+      self.iframe.width = '380px'
+      self.iframe.height = '600px'
+      self.iframe.id = 'ambire-sdk-iframe'
+      self.wrapperElement.appendChild(self.iframe)
     }
 
     this.openLogin = function (chainInfo = null) {
@@ -96,94 +98,56 @@ window.AmbireSDK = function (opt = {}) {
       })
     }
 
-    this.onAlreadyLoggedIn = function (callback) {
-      window.addEventListener('message', (e) => {
-        if (e.origin !== opt.walletUrl || e.data.type !== 'alreadyLoggedIn') return
+    this.onMessage = function (messageType, sdkCallback, clientCallback = undefined) {
+        window.addEventListener('message', (e) => {
+            if (e.origin !== opt.walletUrl || e.data.type !== messageType) return
 
-        self.hideIframe()
-        callback(e.data)
-      })
+            sdkCallback()
+
+            if (clientCallback) clientCallback(e.data)
+        })
+    }
+
+    this.onAlreadyLoggedIn = function (callback) {
+        self.onMessage('alreadyLoggedIn', () => self.hideIframe(),  callback)
     }
 
     // ambire-login-success listener
     this.onLoginSuccess = function (callback) {
-      window.addEventListener('message', (e) => {
-        if (e.origin !== opt.walletUrl || e.data.type !== 'loginSuccess') return
-  
-        self.hideIframe()
-        callback(e.data)
-      })
+        self.onMessage('loginSuccess', () => self.hideIframe(),  callback)
     }
 
     // ambire-registration-success listener
     this.onRegistrationSuccess = function (callback) {
-      window.addEventListener('message', (e) => {
-        if (e.origin !== opt.walletUrl || e.data.type != 'registrationSuccess') return
+        self.onMessage('registrationSuccess', () => {
+        self.iframe.src = opt.walletUrl + '/#/sdk/on-ramp'
+        },  callback)
 
-        const buyCrypto = opt.walletUrl + '/#/sdk/on-ramp'
-        self.iframeElement.innerHTML = `<iframe src="` + buyCrypto + `" width="100%" height="100%" frameborder="0"/>`
-        callback(e.data)
-      })
-
-      window.addEventListener('message', (e) => {
-        if (e.origin !== opt.walletUrl || e.data.type != 'finishRamp') return
-
-        self.hideIframe()
-      })
+        self.onMessage('finishRamp', () => self.hideIframe())
     }
 
     this.onLogoutSuccess = function (callback) {
-      window.addEventListener('message', (e) => {
-        if (e.origin !== opt.walletUrl || e.data.type !== 'logoutSuccess') return
-
-        self.hideIframe()
-        callback(e.data)
-      })
+        self.onMessage('logoutSuccess', () => self.hideIframe(),  callback)
     }
 
     this.onMsgRejected = function (callback) {
-      window.addEventListener('message', (e) => {
-        if (e.origin !== opt.walletUrl || e.data.type !== 'msgRejected') return
-
-        self.hideIframe()
-        callback(e.data)
-      })
+        self.onMessage('msgRejected', () => self.hideIframe(),  callback)
     }
 
     this.onMsgSigned = function (callback) {
-      window.addEventListener('message', (e) => {
-        if (e.origin !== opt.walletUrl || e.data.type !== 'msgSigned') return
-
-        self.hideIframe()
-        callback(e.data)
-      })
+        self.onMessage('msgSigned', () => self.hideIframe(),  callback)
     }
 
     this.onTxnRejected = function (callback) {
-      window.addEventListener('message', (e) => {
-        if (e.origin !== opt.walletUrl || e.data.type !== 'txnRejected') return
-
-        self.hideIframe()
-        callback(e.data)
-      })
+        self.onMessage('txnRejected', () => self.hideIframe(),  callback)
     }
 
     this.onTxnSent = function (callback) {
-      window.addEventListener('message', (e) => {
-        if (e.origin !== opt.walletUrl || e.data.type !== 'txnSent') return
-
-        self.hideIframe()
-        callback(e.data)
-      })
+        self.onMessage('txnSent', () => self.hideIframe(),  callback)
     }
 
     this.onActionRejected = function (callback) {
-      window.addEventListener('message', (e) => {
-        if (e.origin !== opt.walletUrl || e.data.type !== 'actionRejected') return
-
-        self.hideIframe()
-        callback(e.data)
-      })
+        self.onMessage('actionRejected', () => self.hideIframe(),  callback)
     }
 
     // handlers
