@@ -3,205 +3,199 @@ window.AmbireSDK = function (opt = {}) {
 
     this.dappName = opt.dappName ?? 'Unknown Dapp'
     this.dappIconPath = opt.dappIconPath ?? ''
-    this.wrapperElement = document.getElementById(opt.wrapperElementId ?? "ambire-sdk-wrapper")
-    this.iframeElement = document.getElementById(opt.iframeElementId ?? "ambire-sdk-iframe")
-    this.closeButton = document.getElementById(opt.closeButtonId ?? "ambire-sdk-iframe-close")
+    this.wrapperElement = document.getElementById(opt.wrapperElementId ?? 'ambire-sdk-wrapper')
 
-    this.hideIframe = function() {
-        self.iframeElement.style.visibility = 'hidden'
-        self.iframeElement.style.opacity = 0
-        self.iframeElement.style.pointerEvents = 'none'
+    this.hideIframe = function () {
+      document.body.style.pointerEvents = 'auto'
 
-        self.closeButton.style.display = 'none'
+      self.wrapperElement.classList.remove('visible')
 
-        document.body.style.pointerEvents = 'auto'
-        self.wrapperElement.style.visibility = 'hidden'
-        self.wrapperElement.style.opacity = 0
-        self.wrapperElement.style.pointerEvents = 'auto'
+      const wrapperChildren = self.wrapperElement?.childNodes
+
+      if (wrapperChildren?.length > 0) {
+        wrapperChildren.forEach((child) => {
+          child.remove()
+        })
+      }
     }
 
-    this.showIframe = function(url) {
-        document.body.style.pointerEvents = 'none'
-        self.wrapperElement.style.visibility = 'visible'
-        self.wrapperElement.style.opacity = 1
-        self.wrapperElement.style.pointerEvents = 'none'
+    this.showIframe = function (url) {
+      document.body.style.pointerEvents = 'none'
 
-        self.iframeElement.style.width = '60%'
-        self.iframeElement.style.height = '600px'
+      self.wrapperElement.classList.add('visible')
 
-        self.iframeElement.style.visibility = 'visible'
-        self.iframeElement.style.opacity = 1
-        self.iframeElement.style.pointerEvents = 'auto'
+      const iframe = document.createElement('iframe')
 
-        self.iframeElement.innerHTML = `<iframe src="`+ url +`" width="100%" height="100%" frameborder="0"/>`
-
-        self.closeButton.style.display = 'block'
-        self.wrapperElement.style.zIndex = 9999
-        self.closeButton.style.zIndex = 9999
-        self.closeButton.style.pointerEvents = 'auto'
+      iframe.src = url
+      iframe.width = '380px'
+      iframe.height = '600px'
+      iframe.id = 'ambire-sdk-iframe'
+      self.wrapperElement.appendChild(iframe)
     }
 
     this.openLogin = function (chainInfo = null) {
-        let query = `?dappOrigin=${window.location.origin}&dappName=${self.dappName}&dappIcon=${self.dappIconPath}`
-        query = chainInfo ? `${query}&chainId=${chainInfo.chainId}` : query
-        self.showIframe(opt.walletUrl + '/#/sdk/email-login' + query)
+      let query = `?dappOrigin=${window.location.origin}&dappName=${self.dappName}&dappIcon=${self.dappIconPath}`
+      query = chainInfo ? `${query}&chainId=${chainInfo.chainId}` : query
+      self.showIframe(opt.walletUrl + '/#/sdk/email-login' + query)
     }
 
     this.openLogout = function () {
-        let query = `?dappOrigin=${window.location.origin}`
-        self.showIframe(opt.walletUrl + '/#/sdk/logout' + query)
+      let query = `?dappOrigin=${window.location.origin}`
+      self.showIframe(opt.walletUrl + '/#/sdk/logout' + query)
     }
 
-    this.openSignMessage = function(type, messageToSign) {
-        if (!messageToSign) return alert('Invalid input for message')
+    this.openSignMessage = function (type, messageToSign) {
+      if (!messageToSign) return alert('Invalid input for message')
 
-        if (type === 'eth_sign') {
-            if (typeof messageToSign !== 'string') {
-                return alert('Invalid input for message')
-            }
-        } else if (type === 'personal_sign') {
-            if (typeof messageToSign !== 'string') {
-                return alert('Invalid input for message')
-            }
-
-            // convert string to hex
-            messageToSign = messageToSign.match(/^0x[0-9A-Fa-f]+$/g)
-                ? messageToSign
-                : '0x' + messageToSign
-                    .split('')
-                    .map((c) => c.charCodeAt(0).toString(16).padStart(2, '0'))
-                    .join('')
-        } else if (['eth_signTypedData', 'eth_signTypedData_v4'].includes(type)) {
-            messageToSign = typeof messageToSign === 'string'
-                ? messageToSign
-                : JSON.stringify(messageToSign)
-            messageToSign = encodeURIComponent(messageToSign)
-        } else {
-            return alert('Invalid sign type')
+      if (type === 'eth_sign') {
+        if (typeof messageToSign !== 'string') {
+          return alert('Invalid input for message')
+        }
+      } else if (type === 'personal_sign') {
+        if (typeof messageToSign !== 'string') {
+          return alert('Invalid input for message')
         }
 
-        self.showIframe(`${opt.walletUrl}/#/sdk/sign-message/${type}/${messageToSign}?dappOrigin=${window.location.origin}`)
+        // convert string to hex
+        messageToSign = messageToSign.match(/^0x[0-9A-Fa-f]+$/g)
+          ? messageToSign
+          : '0x' +
+            messageToSign
+              .split('')
+              .map((c) => c.charCodeAt(0).toString(16).padStart(2, '0'))
+              .join('')
+      } else if (['eth_signTypedData', 'eth_signTypedData_v4'].includes(type)) {
+        messageToSign = typeof messageToSign === 'string' ? messageToSign : JSON.stringify(messageToSign)
+        messageToSign = encodeURIComponent(messageToSign)
+      } else {
+        return alert('Invalid sign type')
+      }
+
+      self.showIframe(`${opt.walletUrl}/#/sdk/sign-message/${type}/${messageToSign}?dappOrigin=${window.location.origin}`)
     }
 
-    this.openSendTransaction = function(to, value, data) {
-        if (!to || !value || !data || typeof to !== 'string' || typeof value !== 'string' || typeof data !== 'string') {
-            return alert('Invalid txn input data')
-        }
-        self.showIframe(`${opt.walletUrl}/#/sdk/send-transaction/${to}/${value}/${data}`)
+    this.openSendTransaction = function (to, value, data) {
+      if (!to || !value || !data || typeof to !== 'string' || typeof value !== 'string' || typeof data !== 'string') {
+        return alert('Invalid txn input data')
+      }
+      self.showIframe(`${opt.walletUrl}/#/sdk/send-transaction/${to}/${value}/${data}`)
     }
 
     // emit event
-    this.emit = function(eventName, data = {}) {
-        const event = new CustomEvent(eventName, { detail: { ...data }})
-        window.dispatchEvent(event)
-        console.log(`${eventName} was dispatched`)
+    this.emit = function (eventName, data = {}) {
+      const event = new CustomEvent(eventName, { detail: { ...data } })
+      window.dispatchEvent(event)
+      console.log(`${eventName} was dispatched`)
     }
 
     // generic event listener
-    this.on = function(eventName, callback) {
-        // console.log(`${eventName} was received`)
-        window.addEventListener(eventName, function(event) {
-            callback(event)
-        })
+    this.on = function (eventName, callback) {
+      // console.log(`${eventName} was received`)
+      window.addEventListener(eventName, function (event) {
+        callback(event)
+      })
     }
 
     this.onAlreadyLoggedIn = function (callback) {
-        window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl || e.data.type !== 'alreadyLoggedIn') return
+      window.addEventListener('message', (e) => {
+        if (e.origin !== opt.walletUrl || e.data.type !== 'alreadyLoggedIn') return
 
-            self.hideIframe()
-            callback(e.data)
-        })
+        self.hideIframe()
+        callback(e.data)
+      })
     }
 
     // ambire-login-success listener
-    this.onLoginSuccess = function(callback) {
-        window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl || e.data.type !== 'loginSuccess') return
-
-            self.hideIframe()
-            callback(e.data)
-        })
+    this.onLoginSuccess = function (callback) {
+      window.addEventListener('message', (e) => {
+        if (e.origin !== opt.walletUrl || e.data.type !== 'loginSuccess') return
+  
+        self.hideIframe()
+        callback(e.data)
+      })
     }
 
     // ambire-registration-success listener
-    this.onRegistrationSuccess = function(callback) {
-        window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl || e.data.type != 'registrationSuccess') return
+    this.onRegistrationSuccess = function (callback) {
+      window.addEventListener('message', (e) => {
+        if (e.origin !== opt.walletUrl || e.data.type != 'registrationSuccess') return
 
-            const buyCrypto = opt.walletUrl + '/#/sdk/on-ramp'
-            self.iframeElement.innerHTML = `<iframe src="`+ buyCrypto +`" width="100%" height="100%" frameborder="0"/>`
-            callback(e.data)
-        })
+        const buyCrypto = opt.walletUrl + '/#/sdk/on-ramp'
+        self.iframeElement.innerHTML = `<iframe src="` + buyCrypto + `" width="100%" height="100%" frameborder="0"/>`
+        callback(e.data)
+      })
 
-        window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl || e.data.type != 'finishRamp') return
+      window.addEventListener('message', (e) => {
+        if (e.origin !== opt.walletUrl || e.data.type != 'finishRamp') return
 
-            self.hideIframe()
-        })
+        self.hideIframe()
+      })
     }
 
-    this.onLogoutSuccess = function(callback) {
-        window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl || e.data.type !== 'logoutSuccess') return
+    this.onLogoutSuccess = function (callback) {
+      window.addEventListener('message', (e) => {
+        if (e.origin !== opt.walletUrl || e.data.type !== 'logoutSuccess') return
 
-            self.hideIframe()
-            callback(e.data)
-        })
+        self.hideIframe()
+        callback(e.data)
+      })
     }
 
-    this.onMsgRejected = function(callback) {
-        window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl || e.data.type !== 'msgRejected') return
+    this.onMsgRejected = function (callback) {
+      window.addEventListener('message', (e) => {
+        if (e.origin !== opt.walletUrl || e.data.type !== 'msgRejected') return
 
-            self.hideIframe()
-            callback(e.data)
-        })
+        self.hideIframe()
+        callback(e.data)
+      })
     }
 
-    this.onMsgSigned = function(callback) {
-        window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl || e.data.type !== 'msgSigned') return
+    this.onMsgSigned = function (callback) {
+      window.addEventListener('message', (e) => {
+        if (e.origin !== opt.walletUrl || e.data.type !== 'msgSigned') return
 
-            self.hideIframe()
-            callback(e.data)
-        })
+        self.hideIframe()
+        callback(e.data)
+      })
     }
 
-    this.onTxnRejected = function(callback) {
-        window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl || e.data.type !== 'txnRejected') return
+    this.onTxnRejected = function (callback) {
+      window.addEventListener('message', (e) => {
+        if (e.origin !== opt.walletUrl || e.data.type !== 'txnRejected') return
 
-            self.hideIframe()
-            callback(e.data)
-        })
+        self.hideIframe()
+        callback(e.data)
+      })
     }
 
-    this.onTxnSent = function(callback) {
-        window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl || e.data.type !== 'txnSent') return
+    this.onTxnSent = function (callback) {
+      window.addEventListener('message', (e) => {
+        if (e.origin !== opt.walletUrl || e.data.type !== 'txnSent') return
 
-            self.hideIframe()
-            callback(e.data)
-        })
+        self.hideIframe()
+        callback(e.data)
+      })
     }
 
-    this.onActionRejected = function(callback) {
-        window.addEventListener('message', (e) => {
-            if (e.origin !== opt.walletUrl || e.data.type !== 'actionRejected') return
+    this.onActionRejected = function (callback) {
+      window.addEventListener('message', (e) => {
+        if (e.origin !== opt.walletUrl || e.data.type !== 'actionRejected') return
 
-            self.hideIframe()
-            callback(e.data)
-        })
+        self.hideIframe()
+        callback(e.data)
+      })
     }
 
     // handlers
-    window.addEventListener('keyup', function(e) {
-        if (e.key == 'Escape') {
-            self.hideIframe()
-        }
-    })
-    this.closeButton.addEventListener('click', function() {
+    window.addEventListener('keyup', function (e) {
+      if (e.key == 'Escape') {
         self.hideIframe()
+      }
+    })
+
+    window.addEventListener('message', (e) => {
+      if (e.origin !== opt.walletUrl || e.data.type !== 'actionClose') return
+
+      self.hideIframe()
     })
 }
