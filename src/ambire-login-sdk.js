@@ -100,7 +100,7 @@ window.AmbireSDK = function (opt = {}) {
 
     this.onMessage = function (messageType, sdkCallback, clientCallback = undefined) {
         window.addEventListener('message', (e) => {
-            if (e.origin !== getOrigin() || e.data.type !== messageType) return
+            if (e.origin !== self.getOrigin() || e.data.type !== messageType) return
 
             sdkCallback()
 
@@ -158,7 +158,7 @@ window.AmbireSDK = function (opt = {}) {
     })
 
     window.addEventListener('message', (e) => {
-      if (e.origin !== getOrigin() || e.data.type !== 'actionClose') return
+      if (e.origin !== self.getOrigin() || e.data.type !== 'actionClose') return
 
       self.hideIframe()
     })
@@ -167,6 +167,6 @@ window.AmbireSDK = function (opt = {}) {
     // symbols at the end. Otherwise, messages do not pass. This code ensures the correct
     // origin is passed
     this.getOrigin = () => {
-        return opt.walletUrl.substring(0, opt.walletUrl.indexOf('/', opt.walletUrl.indexOf('//') + 2))
+        return opt.walletUrl.split('/').slice(0, 3).join('/')
     }
 }
