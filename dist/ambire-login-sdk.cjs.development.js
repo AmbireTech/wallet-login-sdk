@@ -3,6 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var types = require('@web3-react/types');
+var bignumber = require('@ethersproject/bignumber');
 var providers = require('@ethersproject/providers');
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -116,12 +117,12 @@ class AmbireProvider extends providers.JsonRpcProvider {
           var value = target[prop];
           if (value instanceof Function) {
             return function () {
-              var _txn$value;
               for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
                 args[_key] = arguments[_key];
               }
               var txn = args.data ? args : args[0];
-              provider._sdk.openSendTransaction(txn.to, (_txn$value = txn.value) != null ? _txn$value : '0', txn.data);
+              var txnValue = txn.value ? txn.value instanceof bignumber.BigNumber ? txn.value.toString() : txn.value : '0';
+              provider._sdk.openSendTransaction(txn.to, txnValue, txn.data);
               return new Promise((resolve, reject) => {
                 provider._sdk.onTxnSent( /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator(function* (data) {
