@@ -1,5 +1,4 @@
 import { Connector } from '@web3-react/types';
-import { BigNumber } from '@ethersproject/bignumber';
 import { JsonRpcProvider } from '@ethersproject/providers';
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -117,7 +116,7 @@ class AmbireProvider extends JsonRpcProvider {
                 args[_key] = arguments[_key];
               }
               var txn = args.data ? args : args[0];
-              var txnValue = txn.value ? txn.value instanceof BigNumber ? txn.value.toString() : txn.value : '0';
+              var txnValue = txn.value ? txn.value.toString() : '0';
               provider._sdk.openSendTransaction(txn.to, txnValue, txn.data);
               return new Promise((resolve, reject) => {
                 provider._sdk.onTxnSent( /*#__PURE__*/function () {
