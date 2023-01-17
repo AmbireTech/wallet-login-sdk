@@ -1,4 +1,5 @@
 import { Actions, Connector } from '@web3-react/types'
+import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { ConnectionInfo } from "@ethersproject/web";
 import { Networkish } from '@ethersproject/networks'
@@ -82,7 +83,9 @@ class AmbireProvider extends JsonRpcProvider {
           if (value instanceof Function) {
             return function (...args: any) {
               const txn = args.data ? args : args[0]
-              provider._sdk.openSendTransaction(txn.to, txn.value ?? '0', txn.data)
+              const txnValue = txn.value ? (txn.value instanceof BigNumber ? txn.value.toString() : txn.value) : '0'
+
+              provider._sdk.openSendTransaction(txn.to, txnValue, txn.data)
 
               return new Promise((resolve, reject) => {
                 provider._sdk.onTxnSent(async (data: any) => {
