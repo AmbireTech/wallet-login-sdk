@@ -29,7 +29,7 @@ window.AmbireSDK = function (opt = {}) {
       self.iframe = document.createElement('iframe')
 
       self.iframe.src = url
-      self.iframe.width = '380px'
+      self.iframe.width = '480px'
       self.iframe.height = '600px'
       self.iframe.id = 'ambire-sdk-iframe'
       self.wrapperElement.appendChild(self.iframe)
