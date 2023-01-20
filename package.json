@@ -33,6 +33,7 @@
     "@web3-react/types": "8.0.20-beta.0"
   },
   "devDependencies": {
+    "@rollup/plugin-image": "^3.0.1",
     "tsdx": "^0.14.1"
   }
 }

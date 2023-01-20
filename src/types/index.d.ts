@@ -1,3 +1,8 @@
+// declare module "*.png" {
+//   const value: any
+//   export default value
+// }
+
 declare type sdkParamsType = {
   walletUrl: string,
   dappName: string,

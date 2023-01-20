@@ -1,5 +1,5 @@
 import { sdkParamsType } from '../types'
-import AMBIRE_ICON from 'assets/ambire.png'
+import AMBIRE_ICON from '../assets/ambire.png'
 import { createEIP1193Provider, WalletInit } from '@web3-onboard/common'
 
 export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
