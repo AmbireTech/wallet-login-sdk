@@ -28,6 +28,7 @@
     "@ethersproject/networks": "^5.7.1",
     "@ethersproject/providers": "^5.7.2",
     "@ethersproject/web": "^5.7.1",
+    "@web3-onboard/common": "^2.2.3",
     "@web3-react/core": "8.0.35-beta.0",
     "@web3-react/types": "8.0.20-beta.0"
   },

@@ -1,10 +1,20 @@
-export {}
+declare type sdkParamsType = {
+  walletUrl: string,
+  dappName: string,
+  dappIconPath?: string,
+  chainID: number,
+  wrapperElementId: string
+}
 
 declare global {
   interface Window {
     AmbireSDK: {
-      new ({ walletUrl: string, dappName: string, chainID: number, iframeElementId: string }): AmbireSDK
+      new (sdkParamsType): AmbireSDK
       openLogin: any
     }
   }
+}
+
+export {
+  sdkParamsType
 }
