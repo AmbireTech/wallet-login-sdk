@@ -126,8 +126,17 @@ class AmbireProvider extends providers.JsonRpcProvider {
                 provider._sdk.onTxnSent( /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator(function* (data) {
                     var hash = data.hash;
-                    var tx = yield provider.getTransaction(hash);
-                    var response = provider._wrapTransaction(tx, hash);
+                    // if the txn is submitted, try to fetch it until success
+                    var fetchedTx = null;
+                    var failed = 0;
+                    while (fetchedTx === null && failed < 5) {
+                      fetchedTx = yield provider.getTransaction(hash);
+                      if (fetchedTx === null) {
+                        yield new Promise(r => setTimeout(r, 1500));
+                        failed++;
+                      }
+                    }
+                    var response = provider._wrapTransaction(fetchedTx, hash);
                     response.data = txn.data;
                     return resolve(response);
                   });

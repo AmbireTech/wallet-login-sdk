@@ -1,5 +1,6 @@
 import { Actions, Connector } from '@web3-react/types'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { Transaction } from '@ethersproject/transactions'
 import { ConnectionInfo } from "@ethersproject/web";
 import { Networkish } from '@ethersproject/networks'
 
@@ -89,8 +90,19 @@ class AmbireProvider extends JsonRpcProvider {
               return new Promise((resolve, reject) => {
                 provider._sdk.onTxnSent(async (data: any) => {
                   const hash = data.hash
-                  const tx = await provider.getTransaction(hash)
-                  const response = provider._wrapTransaction(tx, hash)
+
+                  // if the txn is submitted, try to fetch it until success
+                  let fetchedTx = null
+                  let failed = 0
+                  while (fetchedTx === null && failed < 5) {
+                    fetchedTx = await provider.getTransaction(hash)
+                    if (fetchedTx === null) {
+                      await new Promise((r) => setTimeout(r, 1500))
+                      failed++
+                    }
+                  }
+
+                  const response = provider._wrapTransaction(fetchedTx as Transaction, hash)
                   response.data = txn.data
                   return resolve(response)
                 })
