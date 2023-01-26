@@ -1,3 +1,4 @@
+import { sdkCore } from "./sdk-core"
 import { Actions, Connector } from '@web3-react/types'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { Transaction } from '@ethersproject/transactions'
@@ -9,7 +10,7 @@ export class AmbireWallet extends Connector {
 
   constructor(actions: Actions, options: any, onError?: (error: Error) => void) {
     super(actions, onError)
-    this._sdk = new window.AmbireSDK(options)
+    this._sdk = new sdkCore(options)
   }
 
   activate(chainInfo: any): Promise<void> | void {

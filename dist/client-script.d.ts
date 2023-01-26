@@ -1,0 +1,10 @@
+declare var $logoutButton: HTMLElement | null;
+declare var $addressElement: HTMLElement | null;
+declare var $connectBtnId: string;
+declare var $connectButton: HTMLElement | null;
+declare var $sendTxnDiv: HTMLElement | null;
+declare var $sendTxnButton: HTMLElement | null;
+declare var $signMsgDiv: HTMLElement | null;
+declare var $signMsgButton: HTMLElement | null;
+declare const sdk: any;
+declare const wallet: string | null;
