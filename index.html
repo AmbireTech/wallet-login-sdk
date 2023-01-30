@@ -10,8 +10,6 @@
 <body>
     <h1>My Dapp</h1>
 
-    <div id="ambire-sdk-wrapper"></div>
-
     <div>Dapp content here</div>
     <div id="wallet-address"></div>
     <button id="connect">Conenct via Email</button>
@@ -47,7 +45,8 @@
     <br />
     <button id="logout">Logout</button>
 
-    <script src="src/ambire-login-sdk.js"></script>
-    <script src="src/client-script.js"></script>
+    <!-- <script src="src/ambire-login-sdk.js"></script> -->
+    <script src="dist/ambire-login-sdk.cjs.development.js"></script>
+    <script type="module" src="src/client-script.js"></script>
 </body>
 </html>

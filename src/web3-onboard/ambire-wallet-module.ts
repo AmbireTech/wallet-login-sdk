@@ -1,10 +1,10 @@
-import { sdkCore } from "./../sdk-core"
+import { AmbireLoginSDK } from "./../sdk-core"
 import { sdkParamsType } from '../types'
 import AMBIRE_ICON from '../assets/ambire.png'
 import { createEIP1193Provider, WalletInit } from '@web3-onboard/common'
 
 export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
-    const ambireSDK = new sdkCore(sdkParams)
+    const ambireSDK = new AmbireLoginSDK(sdkParams)
 
     let connectedAccounts: string[] = []
     let connectedchain: string = '0x1'
