@@ -1,4 +1,5 @@
 import { sdkParamsType } from './types/index';
+import './styles/main.css';
 declare class AmbireLoginSDK {
     walletUrl: string;
     dappName: string;

@@ -1,4 +1,5 @@
 import { sdkParamsType } from './types/index'
+import './styles/main.css'
 
 let self: AmbireLoginSDK
 

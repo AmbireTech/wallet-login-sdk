@@ -1,0 +1,32 @@
+#ambire-sdk-iframe {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.25);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateZ(0);
+  z-index: 999;
+  border-radius: 12px;
+  border: 0;
+  pointer-events: auto;
+  width: 480px;
+  height: 600px;
+}
+
+#ambire-sdk-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgba(166, 174, 185, 0.7);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: auto;
+}
+
+#ambire-sdk-wrapper.visible {
+  visibility: visible;
+  pointer-events: none;
+  opacity: 1;
+}
