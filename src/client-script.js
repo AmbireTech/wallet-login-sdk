@@ -1,3 +1,4 @@
+import { AmbireLoginSDK } from "./sdk-core"
 var $logoutButton = document.getElementById("logout")
 var $addressElement = document.getElementById("wallet-address")
 var $connectBtnId = 'connect'
@@ -46,11 +47,10 @@ removeAddress = function() {
     window.localStorage.removeItem('wallet_address')
 }
 
-const sdk = new window.AmbireSDK({
+const sdk = new AmbireLoginSDK({
     walletUrl: 'http://localhost:3000',
     dappName: 'dapp1',
     chainID: 1,
-    iframeElementId: 'ambire-sdk-iframe',
 })
 
 const wallet = window.localStorage.getItem('wallet_address')

@@ -2,11 +2,9 @@ declare type sdkParamsType = {
   walletUrl: string,
   dappName: string,
   dappIconPath?: string,
-  chainID: number,
-  wrapperElementId: string
+  chainID?: number,
+  wrapperElementId?: string
 }
-
-declare interface IntSDK {}
 
 declare global {
   interface Window {

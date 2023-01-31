@@ -3,7 +3,6 @@ import { sdkParamsType } from './types/index'
 let self: AmbireLoginSDK
 
 class AmbireLoginSDK {
-
   walletUrl: string
   dappName: string
   dappIconPath: string
