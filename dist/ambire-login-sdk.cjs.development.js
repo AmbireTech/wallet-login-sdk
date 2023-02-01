@@ -51,9 +51,16 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 
+
+
+var style = {
+  __proto__: null
+};
+
 class AmbireLoginSDK {
   constructor(opt) {
     var _opt$walletUrl, _opt$dappName, _opt$dappIconPath, _opt$wrapperElementId;
+    console.log(style);
     this.walletUrl = (_opt$walletUrl = opt.walletUrl) != null ? _opt$walletUrl : 'Unknown Dapp';
     this.dappName = (_opt$dappName = opt.dappName) != null ? _opt$dappName : 'Unknown Dapp';
     this.dappIconPath = (_opt$dappIconPath = opt.dappIconPath) != null ? _opt$dappIconPath : '';
