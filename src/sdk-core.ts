@@ -1,8 +1,6 @@
 import { sdkParamsType } from './types/index'
 import './styles/main.css'
 
-let self: AmbireLoginSDK
-
 class AmbireLoginSDK {
   walletUrl: string
   dappName: string
@@ -12,8 +10,6 @@ class AmbireLoginSDK {
   iframe: any
 
   constructor(opt:  sdkParamsType) {
-    self = this
-
     this.walletUrl = opt.walletUrl ?? 'Unknown Dapp'
     this.dappName = opt.dappName ?? 'Unknown Dapp'
     this.dappIconPath = opt.dappIconPath ?? ''
@@ -22,36 +18,36 @@ class AmbireLoginSDK {
     this.iframe = null
 
     // hardcoded handlers
-    window.addEventListener('keyup', function (e) {
+    window.addEventListener('keyup', (e) => {
       if (e.key === 'Escape') {
-        self.hideIframe()
+        this.hideIframe()
       }
     })
     window.addEventListener('message', (e) => {
-      if (e.origin !== self.getOrigin() || e.data.type !== 'actionClose') return
+      if (e.origin !== this.getOrigin() || e.data.type !== 'actionClose') return
 
-      self.hideIframe()
+      this.hideIframe()
     })
   }
 
   initSdkWrapperDiv(id = 'ambire-sdk-wrapper') {
-    if (self.wrapperElement) return
+    if (this.wrapperElement) return
 
-    self.wrapperElement = document.getElementById(id)
+    this.wrapperElement = document.getElementById(id)
 
-    if (self.wrapperElement) return
+    if (this.wrapperElement) return
 
-    self.wrapperElement = document.createElement('div')
-    self.wrapperElement.id = id
-    document.body.appendChild(self.wrapperElement)
+    this.wrapperElement = document.createElement('div')
+    this.wrapperElement.id = id
+    document.body.appendChild(this.wrapperElement)
   }
 
   hideIframe() {
     document.body.style.pointerEvents = 'auto'
 
-    self.wrapperElement.classList.remove('visible')
+    this.wrapperElement.classList.remove('visible')
 
-    const wrapperChildren = self.wrapperElement?.childNodes
+    const wrapperChildren = this.wrapperElement?.childNodes
 
     if (wrapperChildren?.length > 0) {
       wrapperChildren.forEach((child: any) => {
@@ -61,30 +57,30 @@ class AmbireLoginSDK {
   }
 
   showIframe(url: string) {
-    self.initSdkWrapperDiv(self.wrapperElementId)
+    this.initSdkWrapperDiv(this.wrapperElementId)
 
     document.body.style.pointerEvents = 'none'
 
-    self.wrapperElement.classList.add('visible')
+    this.wrapperElement.classList.add('visible')
 
-    self.iframe = document.createElement('iframe')
+    this.iframe = document.createElement('iframe')
 
-    self.iframe.src = url
-    self.iframe.width = '480px'
-    self.iframe.height = '600px'
-    self.iframe.id = 'ambire-sdk-iframe'
-    self.wrapperElement.appendChild(self.iframe)
+    this.iframe.src = url
+    this.iframe.width = '480px'
+    this.iframe.height = '600px'
+    this.iframe.id = 'ambire-sdk-iframe'
+    this.wrapperElement.appendChild(this.iframe)
   }
 
   openLogin(chainInfo?: { chainId: number }) {
-    let query = `?dappOrigin=${window.location.origin}&dappName=${self.dappName}&dappIcon=${self.dappIconPath}`
+    let query = `?dappOrigin=${window.location.origin}&dappName=${this.dappName}&dappIcon=${this.dappIconPath}`
     query = chainInfo ? `${query}&chainId=${chainInfo.chainId}` : query
-    self.showIframe(this.walletUrl + '/#/sdk/email-login' + query)
+    this.showIframe(this.walletUrl + '/#/sdk/email-login' + query)
   }
 
   openLogout() {
     let query = `?dappOrigin=${window.location.origin}`
-    self.showIframe(this.walletUrl + '/#/sdk/logout' + query)
+    this.showIframe(this.walletUrl + '/#/sdk/logout' + query)
   }
 
   openSignMessage(type: string, messageToSign: string) {
@@ -114,14 +110,14 @@ class AmbireLoginSDK {
       return alert('Invalid sign type')
     }
 
-    self.showIframe(`${this.walletUrl}/#/sdk/sign-message/${type}/${messageToSign}?dappOrigin=${window.location.origin}`)
+    this.showIframe(`${this.walletUrl}/#/sdk/sign-message/${type}/${messageToSign}?dappOrigin=${window.location.origin}`)
   }
 
   openSendTransaction(to: string, value: string, data: string) {
     if (!to || !value || !data || typeof to !== 'string' || typeof value !== 'string' || typeof data !== 'string') {
       return alert('Invalid txn input data')
     }
-    self.showIframe(`${this.walletUrl}/#/sdk/send-transaction/${to}/${value}/${data}`)
+    this.showIframe(`${this.walletUrl}/#/sdk/send-transaction/${to}/${value}/${data}`)
   }
 
   // emit event
@@ -141,7 +137,7 @@ class AmbireLoginSDK {
 
   onMessage(messageType: string, sdkCallback: any, clientCallback?: any) {
     window.addEventListener('message', (e) => {
-      if (e.origin !== self.getOrigin() || e.data.type !== messageType) return
+      if (e.origin !== this.getOrigin() || e.data.type !== messageType) return
 
       sdkCallback()
 
@@ -150,49 +146,49 @@ class AmbireLoginSDK {
   }
 
   onAlreadyLoggedIn(callback: any) {
-    self.onMessage('alreadyLoggedIn', () => self.hideIframe(), callback)
+    this.onMessage('alreadyLoggedIn', () => this.hideIframe(), callback)
   }
 
   // ambire-login-success listener
   onLoginSuccess(callback: any) {
-    self.onMessage('loginSuccess', () => self.hideIframe(), callback)
+    this.onMessage('loginSuccess', () => this.hideIframe(), callback)
   }
 
   // ambire-registration-success listener
   onRegistrationSuccess(callback: any) {
-    self.onMessage(
+    this.onMessage(
       'registrationSuccess',
       () => {
-        self.iframe.src = this.walletUrl + '/#/sdk/on-ramp'
+        this.iframe.src = this.walletUrl + '/#/sdk/on-ramp'
       },
       callback
     )
 
-    self.onMessage('finishRamp', () => self.hideIframe())
+    this.onMessage('finishRamp', () => this.hideIframe())
   }
 
   onLogoutSuccess(callback: any) {
-    self.onMessage('logoutSuccess', () => self.hideIframe(), callback)
+    this.onMessage('logoutSuccess', () => this.hideIframe(), callback)
   }
 
   onMsgRejected(callback: any) {
-    self.onMessage('msgRejected', () => self.hideIframe(), callback)
+    this.onMessage('msgRejected', () => this.hideIframe(), callback)
   }
 
   onMsgSigned(callback: any) {
-    self.onMessage('msgSigned', () => self.hideIframe(), callback)
+    this.onMessage('msgSigned', () => this.hideIframe(), callback)
   }
 
   onTxnRejected(callback: any) {
-    self.onMessage('txnRejected', () => self.hideIframe(), callback)
+    this.onMessage('txnRejected', () => this.hideIframe(), callback)
   }
 
   onTxnSent(callback: any) {
-    self.onMessage('txnSent', () => self.hideIframe(), callback)
+    this.onMessage('txnSent', () => this.hideIframe(), callback)
   }
 
   onActionRejected(callback: any) {
-    self.onMessage('actionRejected', () => self.hideIframe(), callback)
+    this.onMessage('actionRejected', () => this.hideIframe(), callback)
   }
 
   // the origin of this.walletUrl should be protocol://website.name without any additinal "/"

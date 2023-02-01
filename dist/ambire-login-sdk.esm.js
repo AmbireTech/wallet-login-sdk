@@ -47,11 +47,9 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 
-var self;
 class AmbireLoginSDK {
   constructor(opt) {
     var _opt$walletUrl, _opt$dappName, _opt$dappIconPath, _opt$wrapperElementId;
-    self = this;
     this.walletUrl = (_opt$walletUrl = opt.walletUrl) != null ? _opt$walletUrl : 'Unknown Dapp';
     this.dappName = (_opt$dappName = opt.dappName) != null ? _opt$dappName : 'Unknown Dapp';
     this.dappIconPath = (_opt$dappIconPath = opt.dappIconPath) != null ? _opt$dappIconPath : '';
@@ -59,32 +57,32 @@ class AmbireLoginSDK {
     this.wrapperElement = null;
     this.iframe = null;
     // hardcoded handlers
-    window.addEventListener('keyup', function (e) {
+    window.addEventListener('keyup', e => {
       if (e.key === 'Escape') {
-        self.hideIframe();
+        this.hideIframe();
       }
     });
     window.addEventListener('message', e => {
-      if (e.origin !== self.getOrigin() || e.data.type !== 'actionClose') return;
-      self.hideIframe();
+      if (e.origin !== this.getOrigin() || e.data.type !== 'actionClose') return;
+      this.hideIframe();
     });
   }
   initSdkWrapperDiv(id) {
     if (id === void 0) {
       id = 'ambire-sdk-wrapper';
     }
-    if (self.wrapperElement) return;
-    self.wrapperElement = document.getElementById(id);
-    if (self.wrapperElement) return;
-    self.wrapperElement = document.createElement('div');
-    self.wrapperElement.id = id;
-    document.body.appendChild(self.wrapperElement);
+    if (this.wrapperElement) return;
+    this.wrapperElement = document.getElementById(id);
+    if (this.wrapperElement) return;
+    this.wrapperElement = document.createElement('div');
+    this.wrapperElement.id = id;
+    document.body.appendChild(this.wrapperElement);
   }
   hideIframe() {
-    var _self$wrapperElement;
+    var _this$wrapperElement;
     document.body.style.pointerEvents = 'auto';
-    self.wrapperElement.classList.remove('visible');
-    var wrapperChildren = (_self$wrapperElement = self.wrapperElement) == null ? void 0 : _self$wrapperElement.childNodes;
+    this.wrapperElement.classList.remove('visible');
+    var wrapperChildren = (_this$wrapperElement = this.wrapperElement) == null ? void 0 : _this$wrapperElement.childNodes;
     if ((wrapperChildren == null ? void 0 : wrapperChildren.length) > 0) {
       wrapperChildren.forEach(child => {
         child.remove();
@@ -92,24 +90,24 @@ class AmbireLoginSDK {
     }
   }
   showIframe(url) {
-    self.initSdkWrapperDiv(self.wrapperElementId);
+    this.initSdkWrapperDiv(this.wrapperElementId);
     document.body.style.pointerEvents = 'none';
-    self.wrapperElement.classList.add('visible');
-    self.iframe = document.createElement('iframe');
-    self.iframe.src = url;
-    self.iframe.width = '480px';
-    self.iframe.height = '600px';
-    self.iframe.id = 'ambire-sdk-iframe';
-    self.wrapperElement.appendChild(self.iframe);
+    this.wrapperElement.classList.add('visible');
+    this.iframe = document.createElement('iframe');
+    this.iframe.src = url;
+    this.iframe.width = '480px';
+    this.iframe.height = '600px';
+    this.iframe.id = 'ambire-sdk-iframe';
+    this.wrapperElement.appendChild(this.iframe);
   }
   openLogin(chainInfo) {
-    var query = "?dappOrigin=" + window.location.origin + "&dappName=" + self.dappName + "&dappIcon=" + self.dappIconPath;
+    var query = "?dappOrigin=" + window.location.origin + "&dappName=" + this.dappName + "&dappIcon=" + this.dappIconPath;
     query = chainInfo ? query + "&chainId=" + chainInfo.chainId : query;
-    self.showIframe(this.walletUrl + '/#/sdk/email-login' + query);
+    this.showIframe(this.walletUrl + '/#/sdk/email-login' + query);
   }
   openLogout() {
     var query = "?dappOrigin=" + window.location.origin;
-    self.showIframe(this.walletUrl + '/#/sdk/logout' + query);
+    this.showIframe(this.walletUrl + '/#/sdk/logout' + query);
   }
   openSignMessage(type, messageToSign) {
     if (!messageToSign) return alert('Invalid input for message');
@@ -129,13 +127,13 @@ class AmbireLoginSDK {
     } else {
       return alert('Invalid sign type');
     }
-    self.showIframe(this.walletUrl + "/#/sdk/sign-message/" + type + "/" + messageToSign + "?dappOrigin=" + window.location.origin);
+    this.showIframe(this.walletUrl + "/#/sdk/sign-message/" + type + "/" + messageToSign + "?dappOrigin=" + window.location.origin);
   }
   openSendTransaction(to, value, data) {
     if (!to || !value || !data || typeof to !== 'string' || typeof value !== 'string' || typeof data !== 'string') {
       return alert('Invalid txn input data');
     }
-    self.showIframe(this.walletUrl + "/#/sdk/send-transaction/" + to + "/" + value + "/" + data);
+    this.showIframe(this.walletUrl + "/#/sdk/send-transaction/" + to + "/" + value + "/" + data);
   }
   // emit event
   emit(eventName, data) {
@@ -157,42 +155,42 @@ class AmbireLoginSDK {
   }
   onMessage(messageType, sdkCallback, clientCallback) {
     window.addEventListener('message', e => {
-      if (e.origin !== self.getOrigin() || e.data.type !== messageType) return;
+      if (e.origin !== this.getOrigin() || e.data.type !== messageType) return;
       sdkCallback();
       if (clientCallback) clientCallback(e.data);
     });
   }
   onAlreadyLoggedIn(callback) {
-    self.onMessage('alreadyLoggedIn', () => self.hideIframe(), callback);
+    this.onMessage('alreadyLoggedIn', () => this.hideIframe(), callback);
   }
   // ambire-login-success listener
   onLoginSuccess(callback) {
-    self.onMessage('loginSuccess', () => self.hideIframe(), callback);
+    this.onMessage('loginSuccess', () => this.hideIframe(), callback);
   }
   // ambire-registration-success listener
   onRegistrationSuccess(callback) {
-    self.onMessage('registrationSuccess', () => {
-      self.iframe.src = this.walletUrl + '/#/sdk/on-ramp';
+    this.onMessage('registrationSuccess', () => {
+      this.iframe.src = this.walletUrl + '/#/sdk/on-ramp';
     }, callback);
-    self.onMessage('finishRamp', () => self.hideIframe());
+    this.onMessage('finishRamp', () => this.hideIframe());
   }
   onLogoutSuccess(callback) {
-    self.onMessage('logoutSuccess', () => self.hideIframe(), callback);
+    this.onMessage('logoutSuccess', () => this.hideIframe(), callback);
   }
   onMsgRejected(callback) {
-    self.onMessage('msgRejected', () => self.hideIframe(), callback);
+    this.onMessage('msgRejected', () => this.hideIframe(), callback);
   }
   onMsgSigned(callback) {
-    self.onMessage('msgSigned', () => self.hideIframe(), callback);
+    this.onMessage('msgSigned', () => this.hideIframe(), callback);
   }
   onTxnRejected(callback) {
-    self.onMessage('txnRejected', () => self.hideIframe(), callback);
+    this.onMessage('txnRejected', () => this.hideIframe(), callback);
   }
   onTxnSent(callback) {
-    self.onMessage('txnSent', () => self.hideIframe(), callback);
+    this.onMessage('txnSent', () => this.hideIframe(), callback);
   }
   onActionRejected(callback) {
-    self.onMessage('actionRejected', () => self.hideIframe(), callback);
+    this.onMessage('actionRejected', () => this.hideIframe(), callback);
   }
   // the origin of this.walletUrl should be protocol://website.name without any additinal "/"
   // symbols at the end. Otherwise, messages do not pass. This code ensures the correct
