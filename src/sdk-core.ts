@@ -63,13 +63,14 @@ class AmbireLoginSDK {
 
     this.wrapperElement.classList.add('visible')
 
-    this.iframe = document.createElement('iframe')
-
-    this.iframe.src = url
-    this.iframe.width = '480px'
-    this.iframe.height = '600px'
-    this.iframe.id = 'ambire-sdk-iframe'
-    this.wrapperElement.appendChild(this.iframe)
+    if (!this.wrapperElement.childNodes || this.wrapperElement.childNodes.length == 0) {
+      this.iframe = document.createElement('iframe')
+      this.iframe.src = url
+      this.iframe.width = '480px'
+      this.iframe.height = '600px'
+      this.iframe.id = 'ambire-sdk-iframe'
+      this.wrapperElement.appendChild(this.iframe)  
+    }
   }
 
   openLogin(chainInfo?: { chainId: number }) {
