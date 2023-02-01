@@ -1,3 +1,6 @@
+declare module "*.module.css"
+declare module "*.module.scss"
+
 declare type sdkParamsType = {
   walletUrl: string,
   dappName: string,
