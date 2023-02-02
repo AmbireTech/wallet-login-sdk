@@ -47,6 +47,12 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 
+
+
+var styles = {
+  __proto__: null
+};
+
 class AmbireLoginSDK {
   constructor(opt) {
     var _opt$walletUrl, _opt$dappName, _opt$dappIconPath, _opt$wrapperElementId;
@@ -76,13 +82,13 @@ class AmbireLoginSDK {
     if (this.wrapperElement) return;
     this.wrapperElement = document.createElement('div');
     this.wrapperElement.id = id;
-    this.wrapperElement.classList.add('ambireSDKmodal');
+    this.wrapperElement.classList.add(undefined);
     document.body.appendChild(this.wrapperElement);
   }
   hideIframe() {
     var _this$wrapperElement;
     document.body.style.pointerEvents = 'auto';
-    this.wrapperElement.classList.remove('ambireSDKmodalVisible');
+    this.wrapperElement.classList.remove(undefined);
     var wrapperChildren = (_this$wrapperElement = this.wrapperElement) == null ? void 0 : _this$wrapperElement.childNodes;
     if ((wrapperChildren == null ? void 0 : wrapperChildren.length) > 0) {
       wrapperChildren.forEach(child => {
@@ -93,14 +99,14 @@ class AmbireLoginSDK {
   showIframe(url) {
     this.initSdkWrapperDiv(this.wrapperElementId);
     document.body.style.pointerEvents = 'none';
-    this.wrapperElement.classList.add('ambireSDKmodalVisible');
+    this.wrapperElement.classList.add(undefined);
     if (!this.wrapperElement.childNodes || this.wrapperElement.childNodes.length == 0) {
       this.iframe = document.createElement('iframe');
       this.iframe.src = url;
       this.iframe.width = '480px';
       this.iframe.height = '600px';
       this.iframe.id = 'ambire-sdk-iframe';
-      this.iframe.classList.add('ambireSDKiframe');
+      this.iframe.classList.add(undefined);
       this.wrapperElement.appendChild(this.iframe);
     }
   }
