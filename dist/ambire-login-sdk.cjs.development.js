@@ -80,12 +80,13 @@ class AmbireLoginSDK {
     if (this.wrapperElement) return;
     this.wrapperElement = document.createElement('div');
     this.wrapperElement.id = id;
+    this.wrapperElement.classList.add('ambireSDKmodal');
     document.body.appendChild(this.wrapperElement);
   }
   hideIframe() {
     var _this$wrapperElement;
     document.body.style.pointerEvents = 'auto';
-    this.wrapperElement.classList.remove('visible');
+    this.wrapperElement.classList.remove('ambireSDKmodalVisible');
     var wrapperChildren = (_this$wrapperElement = this.wrapperElement) == null ? void 0 : _this$wrapperElement.childNodes;
     if ((wrapperChildren == null ? void 0 : wrapperChildren.length) > 0) {
       wrapperChildren.forEach(child => {
@@ -96,13 +97,14 @@ class AmbireLoginSDK {
   showIframe(url) {
     this.initSdkWrapperDiv(this.wrapperElementId);
     document.body.style.pointerEvents = 'none';
-    this.wrapperElement.classList.add('visible');
+    this.wrapperElement.classList.add('ambireSDKmodalVisible');
     if (!this.wrapperElement.childNodes || this.wrapperElement.childNodes.length == 0) {
       this.iframe = document.createElement('iframe');
       this.iframe.src = url;
       this.iframe.width = '480px';
       this.iframe.height = '600px';
       this.iframe.id = 'ambire-sdk-iframe';
+      this.iframe.classList.add('ambireSDKiframe');
       this.wrapperElement.appendChild(this.iframe);
     }
   }
