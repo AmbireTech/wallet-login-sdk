@@ -1,4 +1,5 @@
 import { sdkParamsType } from './types/index'
+import './styles/main.css';
 
 class AmbireLoginSDK {
   walletUrl: string
@@ -38,13 +39,14 @@ class AmbireLoginSDK {
 
     this.wrapperElement = document.createElement('div')
     this.wrapperElement.id = id
+    this.wrapperElement.classList.add('ambireSDKmodal')
     document.body.appendChild(this.wrapperElement)
   }
 
   hideIframe() {
     document.body.style.pointerEvents = 'auto'
 
-    this.wrapperElement.classList.remove('visible')
+    this.wrapperElement.classList.remove('ambireSDKmodalVisible')
 
     const wrapperChildren = this.wrapperElement?.childNodes
 
@@ -60,7 +62,7 @@ class AmbireLoginSDK {
 
     document.body.style.pointerEvents = 'none'
 
-    this.wrapperElement.classList.add('visible')
+    this.wrapperElement.classList.add('ambireSDKmodalVisible')
 
     if (!this.wrapperElement.childNodes || this.wrapperElement.childNodes.length == 0) {
       this.iframe = document.createElement('iframe')
@@ -68,6 +70,7 @@ class AmbireLoginSDK {
       this.iframe.width = '480px'
       this.iframe.height = '600px'
       this.iframe.id = 'ambire-sdk-iframe'
+      this.iframe.classList.add('ambireSDKiframe')
       this.wrapperElement.appendChild(this.iframe)  
     }
   }

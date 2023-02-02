@@ -1,4 +1,4 @@
-#ambire-sdk-iframe {
+.ambireSDKiframe {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.25);
   top: 50%;
@@ -12,7 +12,7 @@
   height: 600px;
 }
 
-#ambire-sdk-wrapper {
+.ambireSDKmodal {
   position: fixed;
   top: 0;
   left: 0;
@@ -25,7 +25,7 @@
   pointer-events: auto;
 }
 
-#ambire-sdk-wrapper.visible {
+.ambireSDKmodalVisible {
   visibility: visible;
   pointer-events: none;
   opacity: 1;
