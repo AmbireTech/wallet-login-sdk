@@ -10,7 +10,7 @@ module.exports = {
             //     output: 'assets/main.css'
             // }),
             css({
-                inject: false,
+                inject: true,
                 modules: true
             }),
             ...config.plugins,

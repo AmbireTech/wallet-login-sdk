@@ -47,6 +47,36 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 
+function styleInject(css, ref) {
+  if ( ref === void 0 ) ref = {};
+  var insertAt = ref.insertAt;
+
+  if (!css || typeof document === 'undefined') { return; }
+
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+  style.type = 'text/css';
+
+  if (insertAt === 'top') {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var css_248z = ".main_ambireSDKiframe__nd-gU {\n  position: absolute;\n  background-color: rgba(255, 255, 255, 0.25);\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%) translateZ(0);\n  z-index: 999;\n  border-radius: 12px;\n  border: 0;\n  pointer-events: auto;\n  width: 480px;\n  height: 600px;\n}\n\n.main_ambireSDKmodal__2PPKM {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  background-color: rgba(166, 174, 185, 0.7);\n  visibility: hidden;\n  opacity: 0;\n  pointer-events: auto;\n}\n\n.main_ambireSDKmodalVisible__SNfYl {\n  visibility: visible;\n  pointer-events: none;\n  opacity: 1;\n}\n";
+styleInject(css_248z);
+
 class AmbireLoginSDK {
   constructor(opt) {
     var _opt$walletUrl, _opt$dappName, _opt$dappIconPath, _opt$wrapperElementId;
