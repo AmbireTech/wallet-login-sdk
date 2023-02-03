@@ -11,7 +11,8 @@ module.exports = {
             // }),
             css({
                 inject: true,
-                modules: true
+                // modules: true,
+                // extract: 'main.css',
             }),
             ...config.plugins,
         ]

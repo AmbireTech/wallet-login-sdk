@@ -74,7 +74,7 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = ".main_ambireSDKiframe__nd-gU {\n  position: absolute;\n  background-color: rgba(255, 255, 255, 0.25);\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%) translateZ(0);\n  z-index: 999;\n  border-radius: 12px;\n  border: 0;\n  pointer-events: auto;\n  width: 480px;\n  height: 600px;\n}\n\n.main_ambireSDKmodal__2PPKM {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  background-color: rgba(166, 174, 185, 0.7);\n  visibility: hidden;\n  opacity: 0;\n  pointer-events: auto;\n}\n\n.main_ambireSDKmodalVisible__SNfYl {\n  visibility: visible;\n  pointer-events: none;\n  opacity: 1;\n}\n";
+var css_248z = ".ambireSDKiframe {\n  position: absolute;\n  background-color: rgba(255, 255, 255, 0.25);\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%) translateZ(0);\n  z-index: 999;\n  border-radius: 12px;\n  border: 0;\n  pointer-events: auto;\n  width: 480px;\n  height: 600px;\n}\n\n.ambireSDKmodal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  background-color: rgba(166, 174, 185, 0.7);\n  visibility: hidden;\n  opacity: 0;\n  pointer-events: auto;\n}\n\n.ambireSDKmodalVisible {\n  visibility: visible;\n  pointer-events: none;\n  opacity: 1;\n}\n";
 styleInject(css_248z);
 
 class AmbireLoginSDK {
