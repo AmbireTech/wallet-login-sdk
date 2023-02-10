@@ -1,6 +1,6 @@
-import { AmbireLoginSDK } from "./../sdk-core"
-import { sdkParamsType } from '../types'
-import AMBIRE_ICON from '../assets/ambire.png'
+import { AmbireLoginSDK } from 'core'
+import { sdkParamsType } from 'core'
+import { AmbireIcon } from 'core'
 import { createEIP1193Provider, WalletInit } from '@web3-onboard/common'
 
 export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
@@ -55,7 +55,7 @@ export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
     return () => {
         return {
             label: 'Ambire Wallet',
-            getIcon: async () => AMBIRE_ICON,
+            getIcon: async () => AmbireIcon,
             getInterface: async ({ EventEmitter }) => {
                 const emitter = new EventEmitter()
 
