@@ -19,6 +19,9 @@
     "url": "git+https://github.com/cmihaylov/wallet-login-sdk.git",
     "directory": "packages/web3-react"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com"
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -36,5 +39,5 @@
   "devDependencies": {
     "tsdx": "^0.14.1"
   },
-  "gitHead": "647a9bf9cd933b70c4b207bbbd62065a540c3373"
+  "gitHead": "48655aa48222ba41cccd7c453cc10041f5436f18"
 }
