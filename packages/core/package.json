@@ -1,6 +1,6 @@
 {
   "name": "core",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Ambire Walet Login SDK core module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -25,8 +25,6 @@
     "url": "https://github.com/AmbireTech/wallet-login-sdk/issues"
   },
   "homepage": "https://github.com/AmbireTech/wallet-login-sdk#readme",
-  "dependencies": {
-  },
   "devDependencies": {
     "@rollup/plugin-image": "^3.0.1",
     "rollup-plugin-postcss": "^4.0.2",
