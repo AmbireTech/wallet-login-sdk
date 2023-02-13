@@ -1,6 +1,6 @@
 {
   "name": "@cmihaylov/core",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Ambire Walet Login SDK core module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
