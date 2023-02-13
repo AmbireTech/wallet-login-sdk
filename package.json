@@ -1,7 +1,7 @@
 {
   "name": "root",
   "repository": {
-    "url": "https://github.com/AmbireTech/wallet-login-sdk",
+    "url": "https://github.com/cmihaylov/wallet-login-sdk",
     "type": "git"
   },
   "publishConfig": {

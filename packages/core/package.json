@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AmbireTech/wallet-login-sdk.git",
+    "url": "git+https://github.com/cmihaylov/wallet-login-sdk.git",
     "directory": "packages/core"
   },
   "author": "",
@@ -29,5 +29,6 @@
     "@rollup/plugin-image": "^3.0.1",
     "rollup-plugin-postcss": "^4.0.2",
     "tsdx": "^0.14.1"
-  }
+  },
+  "gitHead": "79f6c2ad7e11c21ccc25522d1fbad8648a43c9de"
 }
