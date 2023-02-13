@@ -1,6 +1,6 @@
 {
   "name": "@cmihaylov/web3-onboard",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Ambire Walet Login SDK web3-onboard module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -26,8 +26,8 @@
   },
   "homepage": "https://github.com/AmbireTech/wallet-login-sdk#readme",
   "dependencies": {
-    "@web3-onboard/common": "^2.2.3",
-    "@cmihaylov/core": "*"
+    "@cmihaylov/core": "^0.0.12",
+    "@web3-onboard/common": "^2.2.3"
   },
   "devDependencies": {
     "@rollup/plugin-image": "^3.0.1",
