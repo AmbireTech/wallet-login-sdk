@@ -5,7 +5,7 @@
     "type": "git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.com"
   },
   "workspaces": [
     "packages/*"
