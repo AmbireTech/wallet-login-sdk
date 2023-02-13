@@ -1,5 +1,5 @@
 {
-  "name": "web3-onboard",
+  "name": "@cmihaylov/web3-onboard",
   "version": "0.0.10",
   "description": "Ambire Walet Login SDK web3-onboard module",
   "main": "dist/index.js",
@@ -33,5 +33,5 @@
     "@rollup/plugin-image": "^3.0.1",
     "tsdx": "^0.14.1"
   },
-  "gitHead": "88837875555668a86b9be9452ceb5406cee18a49"
+  "gitHead": "8aa1f216a9b042a1fabedd82e0c4c060094e478f"
 }
