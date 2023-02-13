@@ -1,5 +1,5 @@
 {
-  "name": "wallet-login-sdk",
+  "name": "@cmihaylov/wallet-login-sdk",
   "repository": {
     "url": "https://github.com/AmbireTech/wallet-login-sdk.git",
     "type": "git"
