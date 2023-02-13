@@ -1,5 +1,5 @@
 {
-  "name": "@cmihaylov/web3-react",
+  "name": "web3-react",
   "version": "0.0.12",
   "description": "Ambire Walet Login SDK web3-react module",
   "main": "dist/index.js",
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/AmbireTech/wallet-login-sdk#readme",
   "dependencies": {
-    "@cmihaylov/core": "^0.0.12",
+    "core": "*",
     "@ethersproject/networks": "^5.7.1",
     "@ethersproject/providers": "^5.7.2",
     "@ethersproject/web": "^5.7.1",
@@ -36,5 +36,5 @@
   "devDependencies": {
     "tsdx": "^0.14.1"
   },
-  "gitHead": "8aa1f216a9b042a1fabedd82e0c4c060094e478f"
+  "gitHead": "827f6cba1c13de523f79ac08570efeaca4d52ca7"
 }

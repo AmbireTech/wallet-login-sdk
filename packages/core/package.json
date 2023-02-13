@@ -1,5 +1,5 @@
 {
-  "name": "@cmihaylov/core",
+  "name": "core",
   "version": "0.0.12",
   "description": "Ambire Walet Login SDK core module",
   "main": "dist/index.js",
@@ -30,5 +30,5 @@
     "rollup-plugin-postcss": "^4.0.2",
     "tsdx": "^0.14.1"
   },
-  "gitHead": "8aa1f216a9b042a1fabedd82e0c4c060094e478f"
+  "gitHead": "827f6cba1c13de523f79ac08570efeaca4d52ca7"
 }
