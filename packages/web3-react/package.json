@@ -1,6 +1,6 @@
 {
   "name": "web3-react",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Ambire Walet Login SDK web3-react module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -31,7 +31,7 @@
     "@ethersproject/web": "^5.7.1",
     "@web3-react/core": "8.0.35-beta.0",
     "@web3-react/types": "8.0.20-beta.0",
-    "core": "^0.0.5"
+    "core": "^0.0.6"
   },
   "devDependencies": {
     "tsdx": "^0.14.1"
