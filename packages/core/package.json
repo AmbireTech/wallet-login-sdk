@@ -19,9 +19,6 @@
     "url": "git+https://github.com/cmihaylov/wallet-login-sdk.git",
     "directory": "packages/core"
   },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com"
-  },
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -33,5 +30,5 @@
     "rollup-plugin-postcss": "^4.0.2",
     "tsdx": "^0.14.1"
   },
-  "gitHead": "48655aa48222ba41cccd7c453cc10041f5436f18"
+  "gitHead": "bc0b0844f0c81c7ab32a42021b93d92d6d924f86"
 }
