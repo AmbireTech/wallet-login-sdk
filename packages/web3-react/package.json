@@ -16,7 +16,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AmbireTech/wallet-login-sdk.git"
+    "url": "git+https://github.com/AmbireTech/wallet-login-sdk.git",
+    "directory": "packages/web3-react"
   },
   "author": "",
   "license": "ISC",

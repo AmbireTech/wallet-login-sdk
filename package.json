@@ -1,5 +1,12 @@
 {
   "name": "root",
+  "repository": {
+    "url": "https://github.com/AmbireTech/wallet-login-sdk",
+    "type": "git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "workspaces": [
     "packages/*"
   ],
