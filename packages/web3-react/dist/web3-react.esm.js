@@ -1,6 +1,6 @@
+import { JsonRpcProvider } from '@ethersproject/providers';
 import { AmbireLoginSDK } from '@cmihaylov/core';
 import { Connector } from '@web3-react/types';
-import { JsonRpcProvider } from '@ethersproject/providers';
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
@@ -33,70 +33,6 @@ function _asyncToGenerator(fn) {
   };
 }
 
-class AmbireWallet extends Connector {
-  constructor(actions, options, onError) {
-    super(actions, onError);
-    this._sdk = new AmbireLoginSDK(options);
-  }
-  activate(chainInfo) {
-    this.actions.startActivation();
-    this._sdk.openLogin(chainInfo);
-    return new Promise((resolve, reject) => {
-      this._sdk.onAlreadyLoggedIn(data => {
-        var activeChainId = chainInfo ? parseInt(chainInfo.chainId) : parseInt(data.chainId);
-        this.customProvider = this.getProvider(data.address, data.providerUrl);
-        this.actions.update({
-          chainId: activeChainId,
-          accounts: [data.address]
-        });
-        resolve();
-      });
-      this._sdk.onLoginSuccess(data => {
-        var activeChainId = chainInfo ? parseInt(chainInfo.chainId) : parseInt(data.chainId);
-        this.customProvider = this.getProvider(data.address, data.providerUrl);
-        this.actions.update({
-          chainId: activeChainId,
-          accounts: [data.address]
-        });
-        resolve();
-      });
-      this._sdk.onRegistrationSuccess(data => {
-        var activeChainId = chainInfo ? chainInfo.chainId : data.chainId;
-        this.customProvider = this.getProvider(data.address, data.providerUrl);
-        this.actions.update({
-          chainId: activeChainId,
-          accounts: [data.address]
-        });
-        resolve();
-      });
-      this._sdk.onActionRejected(data => {
-        var activeChainId = parseInt(data.chainId);
-        this.customProvider = this.getProvider(data.address, data.providerUrl);
-        this.actions.update({
-          chainId: activeChainId,
-          accounts: [data.address]
-        });
-        reject({
-          code: 4001,
-          message: 'User rejected the request.'
-        });
-      });
-    });
-  }
-  deactivate() {
-    this._sdk.openLogout();
-    return new Promise(resolve => {
-      this._sdk.onLogoutSuccess(() => {
-        this.customProvider = null;
-        this.actions.resetState();
-        resolve();
-      });
-    });
-  }
-  getProvider(address, providerUrl) {
-    return new AmbireProvider(this._sdk, address, providerUrl);
-  }
-}
 class AmbireProvider extends JsonRpcProvider {
   constructor(sdk, address, url, network) {
     super(url, network);
@@ -191,5 +127,70 @@ class AmbireProvider extends JsonRpcProvider {
   }
 }
 
-export { AmbireWallet };
+class AmbireConnector extends Connector {
+  constructor(actions, options, onError) {
+    super(actions, onError);
+    this._sdk = new AmbireLoginSDK(options);
+  }
+  activate(chainInfo) {
+    this.actions.startActivation();
+    this._sdk.openLogin(chainInfo);
+    return new Promise((resolve, reject) => {
+      this._sdk.onAlreadyLoggedIn(data => {
+        var activeChainId = chainInfo ? parseInt(chainInfo.chainId) : parseInt(data.chainId);
+        this.customProvider = this.getProvider(data.address, data.providerUrl);
+        this.actions.update({
+          chainId: activeChainId,
+          accounts: [data.address]
+        });
+        resolve();
+      });
+      this._sdk.onLoginSuccess(data => {
+        var activeChainId = chainInfo ? parseInt(chainInfo.chainId) : parseInt(data.chainId);
+        this.customProvider = this.getProvider(data.address, data.providerUrl);
+        this.actions.update({
+          chainId: activeChainId,
+          accounts: [data.address]
+        });
+        resolve();
+      });
+      this._sdk.onRegistrationSuccess(data => {
+        var activeChainId = chainInfo ? chainInfo.chainId : data.chainId;
+        this.customProvider = this.getProvider(data.address, data.providerUrl);
+        this.actions.update({
+          chainId: activeChainId,
+          accounts: [data.address]
+        });
+        resolve();
+      });
+      this._sdk.onActionRejected(data => {
+        var activeChainId = parseInt(data.chainId);
+        this.customProvider = this.getProvider(data.address, data.providerUrl);
+        this.actions.update({
+          chainId: activeChainId,
+          accounts: [data.address]
+        });
+        reject({
+          code: 4001,
+          message: 'User rejected the request.'
+        });
+      });
+    });
+  }
+  deactivate() {
+    this._sdk.openLogout();
+    return new Promise(resolve => {
+      this._sdk.onLogoutSuccess(() => {
+        this.customProvider = null;
+        this.actions.resetState();
+        resolve();
+      });
+    });
+  }
+  getProvider(address, providerUrl) {
+    return new AmbireProvider(this._sdk, address, providerUrl);
+  }
+}
+
+export { AmbireConnector, AmbireProvider };
 //# sourceMappingURL=web3-react.esm.js.map
