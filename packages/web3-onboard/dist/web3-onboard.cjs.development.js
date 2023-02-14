@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var core = require('core');
+var core = require('@cmihaylov/core');
 var common = require('@web3-onboard/common');
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {

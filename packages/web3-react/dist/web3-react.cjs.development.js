@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var core = require('core');
+var core = require('@cmihaylov/core');
 var types = require('@web3-react/types');
 var providers = require('@ethersproject/providers');
 

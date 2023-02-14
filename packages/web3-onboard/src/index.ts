@@ -1,6 +1,4 @@
-import { AmbireLoginSDK } from 'core'
-import { sdkParamsType } from 'core'
-import { AmbireIcon } from 'core'
+import { AmbireIcon, AmbireLoginSDK, sdkParamsType } from '@cmihaylov/core'
 import { createEIP1193Provider, WalletInit } from '@web3-onboard/common'
 
 export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {

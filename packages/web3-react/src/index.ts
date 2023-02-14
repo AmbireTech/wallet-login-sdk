@@ -1,4 +1,4 @@
-import { AmbireLoginSDK } from 'core'
+import { AmbireLoginSDK } from '@cmihaylov/core'
 import { Actions, Connector } from '@web3-react/types'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { Transaction } from '@ethersproject/transactions'

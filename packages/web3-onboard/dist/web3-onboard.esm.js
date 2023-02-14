@@ -1,4 +1,4 @@
-import { AmbireLoginSDK, AmbireIcon } from 'core';
+import { AmbireLoginSDK, AmbireIcon } from '@cmihaylov/core';
 import { createEIP1193Provider } from '@web3-onboard/common';
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
