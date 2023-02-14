@@ -11,7 +11,7 @@ class AmbireLoginSDK {
 
   constructor(opt:  sdkParamsType) {
     this.walletUrl = opt.walletUrl ?? 'Unknown Dapp'
-    this.dappName = opt.dappName ?? 'Unknown Dapp'
+    this.dappName = opt.dappName ?? 'Unknown Dapp 1'
     this.dappIconPath = opt.dappIconPath ?? ''
     this.wrapperElementId = opt.wrapperElementId ?? 'ambire-sdk-wrapper'
     this.wrapperElement = null

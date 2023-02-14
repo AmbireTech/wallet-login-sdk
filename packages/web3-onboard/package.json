@@ -19,8 +19,11 @@
     "url": "https://github.com/AmbireTech/wallet-login-sdk.git",
     "directory": "packages/web3-onboard"
   },
-  "author": "",
-  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "AmbireTech",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/AmbireTech/wallet-login-sdk/issues"
   },
