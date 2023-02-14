@@ -1,0 +1,40 @@
+{
+  "name": "@cmihaylov/web3-onboard",
+  "version": "0.0.19",
+  "description": "Ambire Walet Login SDK web3-onboard module",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "tsdx lint src test",
+    "build": "tsdx build",
+    "start": "tsdx watch",
+    "test": "tsdx test",
+    "prepublishOnly": "tsdx build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AmbireTech/wallet-login-sdk.git",
+    "directory": "packages/web3-onboard"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "AmbireTech",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AmbireTech/wallet-login-sdk/issues"
+  },
+  "homepage": "https://github.com/AmbireTech/wallet-login-sdk#readme",
+  "dependencies": {
+    "@cmihaylov/core": "^0.0.19",
+    "@web3-onboard/common": "^2.2.3"
+  },
+  "devDependencies": {
+    "@rollup/plugin-image": "^3.0.1",
+    "tsdx": "^0.14.1"
+  },
+  "gitHead": "4ef0e9b61a1df26ed32e467b786568e2a489fd8b"
+}

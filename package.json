@@ -1,40 +1,18 @@
 {
-  "name": "ambire-login-sdk",
-  "version": "1.0.0",
-  "description": "a tool for login via the ambire wallet",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "lint": "tsdx lint src test",
-    "build": "tsdx build",
-    "start": "tsdx watch",
-    "test": "tsdx test",
-    "prepublishOnly": "tsdx build"
-  },
+  "name": "@cmihaylov/wallet-login-sdk",
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AmbireTech/wallet-login-sdk.git"
+    "url": "https://github.com/AmbireTech/wallet-login-sdk.git",
+    "type": "git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AmbireTech/wallet-login-sdk/issues"
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   },
-  "homepage": "https://github.com/AmbireTech/wallet-login-sdk#readme",
-  "dependencies": {
-    "@ethersproject/networks": "^5.7.1",
-    "@ethersproject/providers": "^5.7.2",
-    "@ethersproject/web": "^5.7.1",
-    "@web3-onboard/common": "^2.2.3",
-    "@web3-react/core": "8.0.35-beta.0",
-    "@web3-react/types": "8.0.20-beta.0"
-  },
+  "author": "AmbireTech",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
-    "@rollup/plugin-image": "^3.0.1",
-    "rollup-plugin-postcss": "^4.0.2",
-    "tsdx": "^0.14.1"
+    "lerna": "^6.4.1"
   }
 }

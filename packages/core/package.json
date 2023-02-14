@@ -1,0 +1,37 @@
+{
+  "name": "@cmihaylov/core",
+  "version": "0.0.19",
+  "description": "Ambire Walet Login SDK core module",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "tsdx lint src test",
+    "build": "tsdx build",
+    "start": "tsdx watch",
+    "test": "tsdx test",
+    "prepublishOnly": "tsdx build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AmbireTech/wallet-login-sdk.git",
+    "directory": "packages/core"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "AmbireTech",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AmbireTech/wallet-login-sdk/issues"
+  },
+  "homepage": "https://github.com/AmbireTech/wallet-login-sdk#readme",
+  "devDependencies": {
+    "@rollup/plugin-image": "^3.0.1",
+    "rollup-plugin-postcss": "^4.0.2",
+    "tsdx": "^0.14.1"
+  },
+  "gitHead": "4ef0e9b61a1df26ed32e467b786568e2a489fd8b"
+}
