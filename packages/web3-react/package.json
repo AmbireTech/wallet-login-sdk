@@ -1,6 +1,6 @@
 {
   "name": "@cmihaylov/web3-react",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Ambire Walet Login SDK web3-react module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
