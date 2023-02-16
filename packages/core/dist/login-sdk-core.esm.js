@@ -51,8 +51,8 @@ styleInject(css_248z);
 class AmbireLoginSDK {
   constructor(opt) {
     var _opt$walletUrl, _opt$dappName, _opt$dappIconPath, _opt$wrapperElementId;
-    this.walletUrl = (_opt$walletUrl = opt.walletUrl) != null ? _opt$walletUrl : 'Unknown Dapp';
-    this.dappName = (_opt$dappName = opt.dappName) != null ? _opt$dappName : 'Unknown Dapp 1';
+    this.walletUrl = (_opt$walletUrl = opt.walletUrl) != null ? _opt$walletUrl : 'https://wallet.ambire.com/sdk-login';
+    this.dappName = (_opt$dappName = opt.dappName) != null ? _opt$dappName : 'Unknown Dapp';
     this.dappIconPath = (_opt$dappIconPath = opt.dappIconPath) != null ? _opt$dappIconPath : '';
     this.wrapperElementId = (_opt$wrapperElementId = opt.wrapperElementId) != null ? _opt$wrapperElementId : 'ambire-sdk-wrapper';
     this.wrapperElement = null;
