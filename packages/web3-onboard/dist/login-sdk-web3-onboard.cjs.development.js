@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var core = require('@cmihaylov/core');
+var loginSdkCore = require('@ambire/login-sdk-core');
 var common = require('@web3-onboard/common');
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -37,7 +37,7 @@ function _asyncToGenerator(fn) {
 }
 
 function AmbireWalletModule(sdkParams) {
-  var ambireSDK = new core.AmbireLoginSDK(sdkParams);
+  var ambireSDK = new loginSdkCore.AmbireLoginSDK(sdkParams);
   var connectedAccounts = [];
   var connectedchain = '0x1';
   var handleLogin = /*#__PURE__*/function () {
@@ -98,7 +98,7 @@ function AmbireWalletModule(sdkParams) {
       label: 'Ambire Wallet',
       getIcon: function () {
         var _getIcon = _asyncToGenerator(function* () {
-          return core.AmbireIcon;
+          return loginSdkCore.AmbireIcon;
         });
         function getIcon() {
           return _getIcon.apply(this, arguments);
@@ -252,4 +252,4 @@ function AmbireWalletModule(sdkParams) {
 }
 
 exports.AmbireWalletModule = AmbireWalletModule;
-//# sourceMappingURL=web3-onboard.cjs.development.js.map
+//# sourceMappingURL=login-sdk-web3-onboard.cjs.development.js.map

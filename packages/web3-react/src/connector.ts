@@ -1,4 +1,4 @@
-import { AmbireLoginSDK } from '@cmihaylov/core'
+import { AmbireLoginSDK } from '@ambire/login-sdk-core'
 import { Actions, Connector } from '@web3-react/types'
 import { AmbireProvider } from './provider'
 

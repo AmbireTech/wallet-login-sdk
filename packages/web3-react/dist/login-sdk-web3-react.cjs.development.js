@@ -3,7 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var providers = require('@ethersproject/providers');
-var core = require('@cmihaylov/core');
+var loginSdkCore = require('@ambire/login-sdk-core');
 var types = require('@web3-react/types');
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -134,7 +134,7 @@ class AmbireProvider extends providers.JsonRpcProvider {
 class AmbireConnector extends types.Connector {
   constructor(actions, options, onError) {
     super(actions, onError);
-    this._sdk = new core.AmbireLoginSDK(options);
+    this._sdk = new loginSdkCore.AmbireLoginSDK(options);
   }
   activate(chainInfo) {
     this.actions.startActivation();
@@ -198,4 +198,4 @@ class AmbireConnector extends types.Connector {
 
 exports.AmbireConnector = AmbireConnector;
 exports.AmbireProvider = AmbireProvider;
-//# sourceMappingURL=web3-react.cjs.development.js.map
+//# sourceMappingURL=login-sdk-web3-react.cjs.development.js.map

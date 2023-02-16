@@ -1,5 +1,5 @@
 {
-  "name": "@cmihaylov/core",
+  "name": "@ambire/login-sdk-core",
   "version": "0.0.19",
   "description": "Ambire Walet Login SDK core module",
   "main": "dist/index.js",

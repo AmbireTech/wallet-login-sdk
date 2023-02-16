@@ -1,5 +1,5 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
-import { AmbireLoginSDK } from '@cmihaylov/core';
+import { AmbireLoginSDK } from '@ambire/login-sdk-core';
 import { Connector } from '@web3-react/types';
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -193,4 +193,4 @@ class AmbireConnector extends Connector {
 }
 
 export { AmbireConnector, AmbireProvider };
-//# sourceMappingURL=web3-react.esm.js.map
+//# sourceMappingURL=login-sdk-web3-react.esm.js.map

@@ -1,4 +1,4 @@
-import { AmbireLoginSDK, AmbireIcon } from '@cmihaylov/core';
+import { AmbireLoginSDK, AmbireIcon } from '@ambire/login-sdk-core';
 import { createEIP1193Provider } from '@web3-onboard/common';
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -248,4 +248,4 @@ function AmbireWalletModule(sdkParams) {
 }
 
 export { AmbireWalletModule };
-//# sourceMappingURL=web3-onboard.esm.js.map
+//# sourceMappingURL=login-sdk-web3-onboard.esm.js.map
