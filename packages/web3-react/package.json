@@ -1,7 +1,7 @@
 {
   "name": "@ambire/login-sdk-web3-react",
   "version": "0.0.21",
-  "description": "Ambire Walet Login SDK web3-react module",
+  "description": "Ambire Wallet Login SDK web3-react module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [

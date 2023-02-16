@@ -1,7 +1,7 @@
 {
   "name": "@ambire/login-sdk-browser",
   "version": "0.0.2",
-  "description": "Ambire Walet Login SDK browser module",
+  "description": "Ambire Wallet Login SDK browser module",
   "type": "module",
   "main": "dist/ambire-login-sdk-browser-bundle.js",
   "typings": "dist/index.d.ts",

@@ -10,8 +10,8 @@ class AmbireLoginSDK {
   iframe: any
 
   constructor(opt:  sdkParamsType) {
-    this.walletUrl = opt.walletUrl ?? 'Unknown Dapp'
-    this.dappName = opt.dappName ?? 'Unknown Dapp 1'
+    this.walletUrl = opt.walletUrl ?? 'https://wallet.ambire.com/sdk-login'
+    this.dappName = opt.dappName ?? 'Unknown Dapp'
     this.dappIconPath = opt.dappIconPath ?? ''
     this.wrapperElementId = opt.wrapperElementId ?? 'ambire-sdk-wrapper'
     this.wrapperElement = null
