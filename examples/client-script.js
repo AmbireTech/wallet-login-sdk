@@ -1,4 +1,3 @@
-import { AmbireLoginSDK } from "./sdk-core"
 var $logoutButton = document.getElementById("logout")
 var $addressElement = document.getElementById("wallet-address")
 var $connectBtnId = 'connect'
@@ -8,50 +7,50 @@ var $sendTxnButton = document.getElementById("ambire-sdk-send-transaction-btn")
 var $signMsgDiv = document.getElementById("ambire-sdk-sign-message")
 var $signMsgButton = document.getElementById("ambire-sdk-sign-message-btn")
 
-showLogout = function() {
+const sdk = new window.AmbireLoginSDK({
+    walletUrl: 'https://wallet.ambire.com/sdk-login',
+    dappName: 'Example dapp',
+    chainID: 1,
+})
+
+const showLogout = function() {
     $logoutButton.style.display = 'block'
 }
-showAddress = function(address) {
+const showAddress = function(address) {
     $addressElement.innerHTML = `Wallet address: ${address}`
 }
-showTxnDiv = function() {
+const showTxnDiv = function() {
     $sendTxnDiv.style.display = 'block'
 }
-showMsgDiv = function() {
+const showMsgDiv = function() {
     $signMsgDiv.style.display = 'block'
 }
-showConnect = function() {
+const showConnect = function() {
     $connectButton.style.display = 'block'
 }
-hideConnect = function() {
+const hideConnect = function() {
     $connectButton.style.display = 'none'
 }
-hideAddress = function() {
+const hideAddress = function() {
     $addressElement.innerHTML = ''
 }
-hideLogout = function() {
+const hideLogout = function() {
     $logoutButton.style.display = 'none'
 }
-hideTxnDiv = function() {
+const hideTxnDiv = function() {
     $sendTxnDiv.style.display = 'none'
 }
-hideMsgDiv = function() {
+const hideMsgDiv = function() {
     $signMsgDiv.style.display = 'none'
 }
 
 // use the local storage to set and remove address
-setAddress = function(address) {
+const setAddress = function(address) {
     window.localStorage.setItem('wallet_address', address)
 }
-removeAddress = function() {
+const removeAddress = function() {
     window.localStorage.removeItem('wallet_address')
 }
-
-const sdk = new AmbireLoginSDK({
-    walletUrl: 'http://localhost:3000',
-    dappName: 'dapp1',
-    chainID: 1,
-})
 
 const wallet = window.localStorage.getItem('wallet_address')
 if (wallet) {
@@ -71,7 +70,7 @@ $logoutButton.addEventListener('click', function() {
     logout()
 })
 
-logout = function() {
+const logout = function() {
     if (!window.localStorage.getItem('wallet_address')) return
 
     sdk.openLogout()
