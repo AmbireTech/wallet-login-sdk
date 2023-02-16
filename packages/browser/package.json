@@ -1,6 +1,6 @@
 {
   "name": "@ambire/login-sdk-browser",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Ambire Wallet Login SDK browser module",
   "type": "module",
   "main": "dist/ambire-login-sdk-browser-bundle.js",
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/AmbireTech/wallet-login-sdk#readme",
   "dependencies": {
-    "@ambire/login-sdk-core": "^0.0.20"
+    "@ambire/login-sdk-core": "^0.0.21"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
