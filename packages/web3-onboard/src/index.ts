@@ -53,7 +53,7 @@ export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
     return () => {
         return {
             label: 'Ambire Wallet',
-            getIcon: async () => AmbireLogoSVG,
+            getIcon: async () => AmbireLogoSVG.default,
             getInterface: async ({ EventEmitter }) => {
                 const emitter = new EventEmitter()
 
