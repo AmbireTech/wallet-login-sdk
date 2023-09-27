@@ -1,6 +1,6 @@
 {
   "name": "@ambire/login-sdk-core",
-  "version": "0.0.21",
+  "version": "0.1.0",
   "description": "Ambire Wallet Login SDK core module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
