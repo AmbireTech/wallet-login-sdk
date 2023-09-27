@@ -1,4 +1,4 @@
-import { AmbireLoginSDK, AmbireIcon } from '@ambire/login-sdk-core';
+import { AmbireLoginSDK, AmbireLogoSVG } from '@ambire/login-sdk-core';
 import { createEIP1193Provider } from '@web3-onboard/common';
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -94,7 +94,7 @@ function AmbireWalletModule(sdkParams) {
       label: 'Ambire Wallet',
       getIcon: function () {
         var _getIcon = _asyncToGenerator(function* () {
-          return AmbireIcon;
+          return AmbireLogoSVG;
         });
         function getIcon() {
           return _getIcon.apply(this, arguments);
