@@ -98,7 +98,7 @@ function AmbireWalletModule(sdkParams) {
       label: 'Ambire Wallet',
       getIcon: function () {
         var _getIcon = _asyncToGenerator(function* () {
-          return loginSdkCore.AmbireIcon;
+          return loginSdkCore.AmbireLogoSVG;
         });
         function getIcon() {
           return _getIcon.apply(this, arguments);
