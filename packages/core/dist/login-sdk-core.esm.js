@@ -212,5 +212,5 @@ class AmbireLoginSDK {
   }
 }
 
-export { logo as AmbireIcon, AmbireLoginSDK, logo$1 as AmbireLogoSVG };
+export { AmbireLoginSDK, logo as AmbireLogoPNG, logo$1 as AmbireLogoSVG };
 //# sourceMappingURL=login-sdk-core.esm.js.map

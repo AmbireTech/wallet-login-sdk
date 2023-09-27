@@ -216,7 +216,7 @@ class AmbireLoginSDK {
   }
 }
 
-exports.AmbireIcon = logo;
 exports.AmbireLoginSDK = AmbireLoginSDK;
+exports.AmbireLogoPNG = logo;
 exports.AmbireLogoSVG = logo$1;
 //# sourceMappingURL=login-sdk-core.cjs.development.js.map
