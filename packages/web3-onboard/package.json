@@ -36,5 +36,5 @@
     "@rollup/plugin-image": "^3.0.1",
     "tsdx": "^0.14.1"
   },
-  "gitHead": "8d2b44614e3982c358d9a5bdac413a331cd2d343"
+  "gitHead": "b629afc65809d62cbf2fe263784830c189f375c2"
 }
