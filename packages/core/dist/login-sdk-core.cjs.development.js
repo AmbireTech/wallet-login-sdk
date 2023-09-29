@@ -62,10 +62,10 @@ styleInject(css_248z);
 class AmbireLoginSDK {
   constructor(opt) {
     var _opt$walletUrl, _opt$dappName, _opt$dappIconPath, _opt$wrapperElementId;
-    this.walletUrl = (_opt$walletUrl = opt.walletUrl) != null ? _opt$walletUrl : 'https://wallet.ambire.com/sdk-login';
-    this.dappName = (_opt$dappName = opt.dappName) != null ? _opt$dappName : 'Unknown Dapp';
-    this.dappIconPath = (_opt$dappIconPath = opt.dappIconPath) != null ? _opt$dappIconPath : '';
-    this.wrapperElementId = (_opt$wrapperElementId = opt.wrapperElementId) != null ? _opt$wrapperElementId : 'ambire-sdk-wrapper';
+    this.walletUrl = (_opt$walletUrl = opt.walletUrl) !== null && _opt$walletUrl !== void 0 ? _opt$walletUrl : 'https://wallet.ambire.com/sdk-login';
+    this.dappName = (_opt$dappName = opt.dappName) !== null && _opt$dappName !== void 0 ? _opt$dappName : 'Unknown Dapp';
+    this.dappIconPath = (_opt$dappIconPath = opt.dappIconPath) !== null && _opt$dappIconPath !== void 0 ? _opt$dappIconPath : '';
+    this.wrapperElementId = (_opt$wrapperElementId = opt.wrapperElementId) !== null && _opt$wrapperElementId !== void 0 ? _opt$wrapperElementId : 'ambire-sdk-wrapper';
     this.wrapperElement = null;
     this.iframe = null;
     // hardcoded handlers
@@ -95,8 +95,8 @@ class AmbireLoginSDK {
     var _this$wrapperElement;
     document.body.style.pointerEvents = 'auto';
     this.wrapperElement.classList.remove('ambireSDKmodalVisible');
-    var wrapperChildren = (_this$wrapperElement = this.wrapperElement) == null ? void 0 : _this$wrapperElement.childNodes;
-    if ((wrapperChildren == null ? void 0 : wrapperChildren.length) > 0) {
+    var wrapperChildren = (_this$wrapperElement = this.wrapperElement) === null || _this$wrapperElement === void 0 ? void 0 : _this$wrapperElement.childNodes;
+    if ((wrapperChildren === null || wrapperChildren === void 0 ? void 0 : wrapperChildren.length) > 0) {
       wrapperChildren.forEach(child => {
         child.remove();
       });

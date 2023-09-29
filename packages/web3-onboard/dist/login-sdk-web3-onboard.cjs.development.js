@@ -5,52 +5,21 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var loginSdkCore = require('@ambire/login-sdk-core');
 var common = require('@web3-onboard/common');
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-      args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-      _next(undefined);
-    });
-  };
-}
-
 function AmbireWalletModule(sdkParams) {
   var ambireSDK = new loginSdkCore.AmbireLoginSDK(sdkParams);
   var connectedAccounts = [];
   var connectedchain;
-  var handleLogin = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator(function* (chainId) {
+  var handleLogin = function handleLogin(chainId) {
+    if (chainId === void 0) {
+      chainId = null;
+    }
+    try {
       var _chainId;
-      if (chainId === void 0) {
-        chainId = null;
-      }
-      chainId = (_chainId = chainId) != null ? _chainId : connectedchain;
+      chainId = (_chainId = chainId) !== null && _chainId !== void 0 ? _chainId : connectedchain;
       ambireSDK.openLogin({
         chainId: parseInt(chainId)
       });
-      return new Promise((resolve, reject) => {
+      return Promise.resolve(new Promise((resolve, reject) => {
         ambireSDK.onLoginSuccess(data => {
           connectedAccounts = [data.address];
           connectedchain = "0x" + parseInt(data.chainId).toString(16);
@@ -73,16 +42,15 @@ function AmbireWalletModule(sdkParams) {
             message: 'User rejected the request.'
           });
         });
-      });
-    });
-    return function handleLogin(_x) {
-      return _ref.apply(this, arguments);
-    };
-  }();
-  var handleSignMessage = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator(function* (signType, message) {
+      }));
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+  var handleSignMessage = function handleSignMessage(signType, message) {
+    try {
       ambireSDK.openSignMessage(signType, message);
-      return new Promise((resolve, reject) => {
+      return Promise.resolve(new Promise((resolve, reject) => {
         ambireSDK.onMsgSigned(data => {
           return resolve(data.signature);
         });
@@ -92,19 +60,18 @@ function AmbireWalletModule(sdkParams) {
             message: 'User rejected the request.'
           });
         });
-      });
-    });
-    return function handleSignMessage(_x2, _x3) {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-  var handleSignTransaction = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator(function* (transactionObject) {
+      }));
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+  var handleSignTransaction = function handleSignTransaction(transactionObject) {
+    try {
       var txTo = transactionObject.to.toString();
       var txValue = transactionObject.value ? transactionObject.value.toString() : '0x';
       var txData = transactionObject.data ? transactionObject.data.toString() : '0x';
       ambireSDK.openSendTransaction(txTo, txValue, txData);
-      return new Promise((resolve, reject) => {
+      return Promise.resolve(new Promise((resolve, reject) => {
         ambireSDK.onTxnSent(data => {
           return resolve(data.hash);
         });
@@ -114,136 +81,101 @@ function AmbireWalletModule(sdkParams) {
             message: 'User rejected the request.'
           });
         });
-      });
-    });
-    return function handleSignTransaction(_x4) {
-      return _ref3.apply(this, arguments);
-    };
-  }();
+      }));
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
   return () => {
     return {
       label: 'Ambire Wallet',
       getIcon: function () {
-        var _getIcon = _asyncToGenerator(function* () {
-          return loginSdkCore.AmbireLogoSVG.default;
-        });
-        function getIcon() {
-          return _getIcon.apply(this, arguments);
+        try {
+          return Promise.resolve(loginSdkCore.AmbireLogoSVG.default);
+        } catch (e) {
+          return Promise.reject(e);
         }
-        return getIcon;
-      }(),
-      getInterface: function () {
-        var _getInterface = _asyncToGenerator(function* (_ref4) {
-          var {
-            EventEmitter
-          } = _ref4;
+      },
+      getInterface: function (_ref) {
+        var {
+          EventEmitter
+        } = _ref;
+        try {
           var emitter = new EventEmitter();
           var requestPatch = {
             eth_requestAccounts: function () {
-              var _eth_requestAccounts = _asyncToGenerator(function* () {
+              try {
                 if (connectedAccounts.length > 0) {
                   return Promise.resolve(connectedAccounts);
                 }
                 return handleLogin();
-              });
-              function eth_requestAccounts() {
-                return _eth_requestAccounts.apply(this, arguments);
+              } catch (e) {
+                return Promise.reject(e);
               }
-              return eth_requestAccounts;
-            }(),
+            },
             eth_selectAccounts: function () {
-              var _eth_selectAccounts = _asyncToGenerator(function* () {
+              try {
                 if (connectedAccounts.length > 0) {
                   return Promise.resolve(connectedAccounts);
                 }
                 return handleLogin();
-              });
-              function eth_selectAccounts() {
-                return _eth_selectAccounts.apply(this, arguments);
+              } catch (e) {
+                return Promise.reject(e);
               }
-              return eth_selectAccounts;
-            }(),
+            },
             eth_accounts: function () {
-              var _eth_accounts = _asyncToGenerator(function* () {
+              try {
                 return Promise.resolve(connectedAccounts);
-              });
-              function eth_accounts() {
-                return _eth_accounts.apply(this, arguments);
+              } catch (e) {
+                return Promise.reject(e);
               }
-              return eth_accounts;
-            }(),
+            },
             eth_chainId: function () {
-              var _eth_chainId = _asyncToGenerator(function* () {
+              try {
                 return Promise.resolve(connectedchain);
-              });
-              function eth_chainId() {
-                return _eth_chainId.apply(this, arguments);
+              } catch (e) {
+                return Promise.reject(e);
               }
-              return eth_chainId;
-            }(),
+            },
             // @ts-ignore
-            personal_sign: function () {
-              var _personal_sign = _asyncToGenerator(function* (_ref5) {
-                var {
-                  params: [message, address]
-                } = _ref5;
-                return handleSignMessage('personal_sign', message);
-              });
-              function personal_sign(_x6) {
-                return _personal_sign.apply(this, arguments);
-              }
-              return personal_sign;
-            }(),
+            personal_sign: function (_ref2) {
+              var {
+                params: [message, address]
+              } = _ref2;
+              return handleSignMessage('personal_sign', message);
+            },
             // @ts-ignore
-            eth_sign: function () {
-              var _eth_sign = _asyncToGenerator(function* (_ref6) {
-                var {
-                  params: [address, message]
-                } = _ref6;
-                return handleSignMessage('eth_sign', message);
-              });
-              function eth_sign(_x7) {
-                return _eth_sign.apply(this, arguments);
-              }
-              return eth_sign;
-            }(),
+            eth_sign: function (_ref3) {
+              var {
+                params: [address, message]
+              } = _ref3;
+              return handleSignMessage('eth_sign', message);
+            },
             // @ts-ignore
-            eth_signTypedData: function () {
-              var _eth_signTypedData = _asyncToGenerator(function* (_ref7) {
-                var {
-                  params: [address, typedData]
-                } = _ref7;
-                return handleSignMessage('eth_signTypedData', typedData);
-              });
-              function eth_signTypedData(_x8) {
-                return _eth_signTypedData.apply(this, arguments);
-              }
-              return eth_signTypedData;
-            }(),
+            eth_signTypedData: function (_ref4) {
+              var {
+                params: [address, typedData]
+              } = _ref4;
+              return handleSignMessage('eth_signTypedData', typedData);
+            },
             // @ts-ignore
-            eth_signTypedData_v4: function () {
-              var _eth_signTypedData_v = _asyncToGenerator(function* (_ref8) {
-                var {
-                  params: [address, typedData]
-                } = _ref8;
-                return handleSignMessage('eth_signTypedData_v4', typedData);
-              });
-              function eth_signTypedData_v4(_x9) {
-                return _eth_signTypedData_v.apply(this, arguments);
-              }
-              return eth_signTypedData_v4;
-            }(),
+            eth_signTypedData_v4: function (_ref5) {
+              var {
+                params: [address, typedData]
+              } = _ref5;
+              return handleSignMessage('eth_signTypedData_v4', typedData);
+            },
             // @ts-ignore
-            eth_sendTransaction: function () {
-              var _eth_sendTransaction = _asyncToGenerator(function* (_ref9) {
-                var {
-                  params: [transactionObject]
-                } = _ref9;
+            eth_sendTransaction: function (_ref6) {
+              var {
+                params: [transactionObject]
+              } = _ref6;
+              try {
                 var txTo = transactionObject.to.toString();
                 var txValue = transactionObject.value.toString();
                 var txData = transactionObject.data ? transactionObject.data.toString() : '0x';
                 ambireSDK.openSendTransaction(txTo, txValue, txData);
-                return new Promise((resolve, reject) => {
+                return Promise.resolve(new Promise((resolve, reject) => {
                   ambireSDK.onTxnSent(data => {
                     return resolve(data.hash);
                   });
@@ -253,52 +185,36 @@ function AmbireWalletModule(sdkParams) {
                       message: 'User rejected the request.'
                     });
                   });
-                });
-              });
-              function eth_sendTransaction(_x10) {
-                return _eth_sendTransaction.apply(this, arguments);
+                }));
+              } catch (e) {
+                return Promise.reject(e);
               }
-              return eth_sendTransaction;
-            }(),
+            },
             // @ts-ignore
-            eth_sendTransaction: function () {
-              var _eth_sendTransaction2 = _asyncToGenerator(function* (_ref10) {
-                var {
-                  params: [transactionObject]
-                } = _ref10;
-                return handleSignTransaction(transactionObject);
-              });
-              function eth_sendTransaction(_x11) {
-                return _eth_sendTransaction2.apply(this, arguments);
-              }
-              return eth_sendTransaction;
-            }(),
+            eth_sendTransaction: function (_ref7) {
+              var {
+                params: [transactionObject]
+              } = _ref7;
+              return handleSignTransaction(transactionObject);
+            },
             // @ts-ignore
-            eth_signTransaction: function () {
-              var _eth_signTransaction = _asyncToGenerator(function* (_ref11) {
-                var {
-                  params: [transactionObject]
-                } = _ref11;
-                return handleSignTransaction(transactionObject);
-              });
-              function eth_signTransaction(_x12) {
-                return _eth_signTransaction.apply(this, arguments);
-              }
-              return eth_signTransaction;
-            }(),
+            eth_signTransaction: function (_ref8) {
+              var {
+                params: [transactionObject]
+              } = _ref8;
+              return handleSignTransaction(transactionObject);
+            },
             // @ts-ignore
-            wallet_switchEthereumChain: function () {
-              var _wallet_switchEthereumChain = _asyncToGenerator(function* (_ref12) {
-                var {
-                  params: [chainObject]
-                } = _ref12;
+            wallet_switchEthereumChain: function (_ref9) {
+              var {
+                params: [chainObject]
+              } = _ref9;
+              try {
                 return handleLogin(chainObject.chainId);
-              });
-              function wallet_switchEthereumChain(_x13) {
-                return _wallet_switchEthereumChain.apply(this, arguments);
+              } catch (e) {
+                return Promise.reject(e);
               }
-              return wallet_switchEthereumChain;
-            }()
+            }
           };
           var provider = common.createEIP1193Provider({
             on: emitter.on.bind(emitter),
@@ -309,15 +225,13 @@ function AmbireWalletModule(sdkParams) {
               });
             }
           }, requestPatch);
-          return {
+          return Promise.resolve({
             provider
-          };
-        });
-        function getInterface(_x5) {
-          return _getInterface.apply(this, arguments);
+          });
+        } catch (e) {
+          return Promise.reject(e);
         }
-        return getInterface;
-      }(),
+      },
       platforms: ['all']
     };
   };
