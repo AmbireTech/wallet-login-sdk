@@ -116,6 +116,12 @@ export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
 
                 const provider = createEIP1193Provider({
                     on: emitter.on.bind(emitter),
+                    disconnect: () => {
+                        ambireSDK.openLogout()                      
+                        ambireSDK.onLogoutSuccess(() => {
+                            connectedAccounts = []
+                        })
+                    }
                 }, requestPatch)
 
                 return {

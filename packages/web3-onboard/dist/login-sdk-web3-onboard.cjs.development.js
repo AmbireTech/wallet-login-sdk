@@ -235,7 +235,13 @@ function AmbireWalletModule(sdkParams) {
             }()
           };
           var provider = common.createEIP1193Provider({
-            on: emitter.on.bind(emitter)
+            on: emitter.on.bind(emitter),
+            disconnect: () => {
+              ambireSDK.openLogout();
+              ambireSDK.onLogoutSuccess(() => {
+                connectedAccounts = [];
+              });
+            }
           }, requestPatch);
           return {
             provider
