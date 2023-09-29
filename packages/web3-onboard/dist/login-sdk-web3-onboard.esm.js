@@ -35,11 +35,16 @@ function _asyncToGenerator(fn) {
 function AmbireWalletModule(sdkParams) {
   var ambireSDK = new AmbireLoginSDK(sdkParams);
   var connectedAccounts = [];
-  var connectedchain = '0x1';
+  var connectedchain;
   var handleLogin = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator(function* () {
+    var _ref = _asyncToGenerator(function* (chainId) {
+      var _chainId;
+      if (chainId === void 0) {
+        chainId = null;
+      }
+      chainId = (_chainId = chainId) != null ? _chainId : connectedchain;
       ambireSDK.openLogin({
-        chainId: parseInt(connectedchain)
+        chainId: parseInt(chainId)
       });
       return new Promise((resolve, reject) => {
         ambireSDK.onLoginSuccess(data => {
@@ -66,7 +71,7 @@ function AmbireWalletModule(sdkParams) {
         });
       });
     });
-    return function handleLogin() {
+    return function handleLogin(_x) {
       return _ref.apply(this, arguments);
     };
   }();
@@ -85,7 +90,7 @@ function AmbireWalletModule(sdkParams) {
         });
       });
     });
-    return function handleSignMessage(_x, _x2) {
+    return function handleSignMessage(_x2, _x3) {
       return _ref2.apply(this, arguments);
     };
   }();
@@ -107,7 +112,7 @@ function AmbireWalletModule(sdkParams) {
         });
       });
     });
-    return function handleSignTransaction(_x3) {
+    return function handleSignTransaction(_x4) {
       return _ref3.apply(this, arguments);
     };
   }();
@@ -180,7 +185,7 @@ function AmbireWalletModule(sdkParams) {
                 } = _ref5;
                 return handleSignMessage('personal_sign', message);
               });
-              function personal_sign(_x5) {
+              function personal_sign(_x6) {
                 return _personal_sign.apply(this, arguments);
               }
               return personal_sign;
@@ -193,7 +198,7 @@ function AmbireWalletModule(sdkParams) {
                 } = _ref6;
                 return handleSignMessage('eth_sign', message);
               });
-              function eth_sign(_x6) {
+              function eth_sign(_x7) {
                 return _eth_sign.apply(this, arguments);
               }
               return eth_sign;
@@ -206,7 +211,7 @@ function AmbireWalletModule(sdkParams) {
                 } = _ref7;
                 return handleSignMessage('eth_signTypedData', typedData);
               });
-              function eth_signTypedData(_x7) {
+              function eth_signTypedData(_x8) {
                 return _eth_signTypedData.apply(this, arguments);
               }
               return eth_signTypedData;
@@ -219,7 +224,7 @@ function AmbireWalletModule(sdkParams) {
                 } = _ref8;
                 return handleSignMessage('eth_signTypedData_v4', typedData);
               });
-              function eth_signTypedData_v4(_x8) {
+              function eth_signTypedData_v4(_x9) {
                 return _eth_signTypedData_v.apply(this, arguments);
               }
               return eth_signTypedData_v4;
@@ -246,7 +251,7 @@ function AmbireWalletModule(sdkParams) {
                   });
                 });
               });
-              function eth_sendTransaction(_x9) {
+              function eth_sendTransaction(_x10) {
                 return _eth_sendTransaction.apply(this, arguments);
               }
               return eth_sendTransaction;
@@ -259,7 +264,7 @@ function AmbireWalletModule(sdkParams) {
                 } = _ref10;
                 return handleSignTransaction(transactionObject);
               });
-              function eth_sendTransaction(_x10) {
+              function eth_sendTransaction(_x11) {
                 return _eth_sendTransaction2.apply(this, arguments);
               }
               return eth_sendTransaction;
@@ -272,10 +277,23 @@ function AmbireWalletModule(sdkParams) {
                 } = _ref11;
                 return handleSignTransaction(transactionObject);
               });
-              function eth_signTransaction(_x11) {
+              function eth_signTransaction(_x12) {
                 return _eth_signTransaction.apply(this, arguments);
               }
               return eth_signTransaction;
+            }(),
+            // @ts-ignore
+            wallet_switchEthereumChain: function () {
+              var _wallet_switchEthereumChain = _asyncToGenerator(function* (_ref12) {
+                var {
+                  params: [chainObject]
+                } = _ref12;
+                return handleLogin(chainObject.chainId);
+              });
+              function wallet_switchEthereumChain(_x13) {
+                return _wallet_switchEthereumChain.apply(this, arguments);
+              }
+              return wallet_switchEthereumChain;
             }()
           };
           var provider = createEIP1193Provider({
@@ -291,7 +309,7 @@ function AmbireWalletModule(sdkParams) {
             provider
           };
         });
-        function getInterface(_x4) {
+        function getInterface(_x5) {
           return _getInterface.apply(this, arguments);
         }
         return getInterface;

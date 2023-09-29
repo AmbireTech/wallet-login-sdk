@@ -5,10 +5,12 @@ export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
     const ambireSDK = new AmbireLoginSDK(sdkParams)
 
     let connectedAccounts: string[] = []
-    let connectedchain: string = '0x1'
+    let connectedchain: string
 
-    const handleLogin = async () => {
-        ambireSDK.openLogin({chainId: parseInt(connectedchain)})
+    const handleLogin = async (chainId: string|null = null) => {
+        chainId = chainId ?? connectedchain
+
+        ambireSDK.openLogin({chainId: parseInt(chainId)})
 
         return new Promise((resolve, reject) => {
             ambireSDK.onLoginSuccess((data: any) => {
@@ -137,6 +139,10 @@ export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
                     // @ts-ignore
                     eth_signTransaction: async ({ params: [transactionObject] }) => {
                         return handleSignTransaction(transactionObject)
+                    },
+                    // @ts-ignore
+                    wallet_switchEthereumChain: async ({ params: [chainObject] }) => {
+                        return handleLogin(chainObject.chainId)
                     },
                 }
 
