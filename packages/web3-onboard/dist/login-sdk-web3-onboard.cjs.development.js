@@ -39,11 +39,16 @@ function _asyncToGenerator(fn) {
 function AmbireWalletModule(sdkParams) {
   var ambireSDK = new loginSdkCore.AmbireLoginSDK(sdkParams);
   var connectedAccounts = [];
-  var connectedchain = '0x1';
+  var connectedchain;
   var handleLogin = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator(function* () {
+    var _ref = _asyncToGenerator(function* (chainId) {
+      var _chainId;
+      if (chainId === void 0) {
+        chainId = null;
+      }
+      chainId = (_chainId = chainId) != null ? _chainId : connectedchain;
       ambireSDK.openLogin({
-        chainId: parseInt(connectedchain)
+        chainId: parseInt(chainId)
       });
       return new Promise((resolve, reject) => {
         ambireSDK.onLoginSuccess(data => {
@@ -70,7 +75,7 @@ function AmbireWalletModule(sdkParams) {
         });
       });
     });
-    return function handleLogin() {
+    return function handleLogin(_x) {
       return _ref.apply(this, arguments);
     };
   }();
@@ -89,8 +94,30 @@ function AmbireWalletModule(sdkParams) {
         });
       });
     });
-    return function handleSignMessage(_x, _x2) {
+    return function handleSignMessage(_x2, _x3) {
       return _ref2.apply(this, arguments);
+    };
+  }();
+  var handleSignTransaction = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(function* (transactionObject) {
+      var txTo = transactionObject.to.toString();
+      var txValue = transactionObject.value ? transactionObject.value.toString() : '0x';
+      var txData = transactionObject.data ? transactionObject.data.toString() : '0x';
+      ambireSDK.openSendTransaction(txTo, txValue, txData);
+      return new Promise((resolve, reject) => {
+        ambireSDK.onTxnSent(data => {
+          return resolve(data.hash);
+        });
+        ambireSDK.onTxnRejected(() => {
+          reject({
+            code: 4001,
+            message: 'User rejected the request.'
+          });
+        });
+      });
+    });
+    return function handleSignTransaction(_x4) {
+      return _ref3.apply(this, arguments);
     };
   }();
   return () => {
@@ -106,10 +133,10 @@ function AmbireWalletModule(sdkParams) {
         return getIcon;
       }(),
       getInterface: function () {
-        var _getInterface = _asyncToGenerator(function* (_ref3) {
+        var _getInterface = _asyncToGenerator(function* (_ref4) {
           var {
             EventEmitter
-          } = _ref3;
+          } = _ref4;
           var emitter = new EventEmitter();
           var requestPatch = {
             eth_requestAccounts: function () {
@@ -156,62 +183,62 @@ function AmbireWalletModule(sdkParams) {
             }(),
             // @ts-ignore
             personal_sign: function () {
-              var _personal_sign = _asyncToGenerator(function* (_ref4) {
+              var _personal_sign = _asyncToGenerator(function* (_ref5) {
                 var {
                   params: [message, address]
-                } = _ref4;
+                } = _ref5;
                 return handleSignMessage('personal_sign', message);
               });
-              function personal_sign(_x4) {
+              function personal_sign(_x6) {
                 return _personal_sign.apply(this, arguments);
               }
               return personal_sign;
             }(),
             // @ts-ignore
             eth_sign: function () {
-              var _eth_sign = _asyncToGenerator(function* (_ref5) {
+              var _eth_sign = _asyncToGenerator(function* (_ref6) {
                 var {
                   params: [address, message]
-                } = _ref5;
+                } = _ref6;
                 return handleSignMessage('eth_sign', message);
               });
-              function eth_sign(_x5) {
+              function eth_sign(_x7) {
                 return _eth_sign.apply(this, arguments);
               }
               return eth_sign;
             }(),
             // @ts-ignore
             eth_signTypedData: function () {
-              var _eth_signTypedData = _asyncToGenerator(function* (_ref6) {
+              var _eth_signTypedData = _asyncToGenerator(function* (_ref7) {
                 var {
                   params: [address, typedData]
-                } = _ref6;
+                } = _ref7;
                 return handleSignMessage('eth_signTypedData', typedData);
               });
-              function eth_signTypedData(_x6) {
+              function eth_signTypedData(_x8) {
                 return _eth_signTypedData.apply(this, arguments);
               }
               return eth_signTypedData;
             }(),
             // @ts-ignore
             eth_signTypedData_v4: function () {
-              var _eth_signTypedData_v = _asyncToGenerator(function* (_ref7) {
+              var _eth_signTypedData_v = _asyncToGenerator(function* (_ref8) {
                 var {
                   params: [address, typedData]
-                } = _ref7;
+                } = _ref8;
                 return handleSignMessage('eth_signTypedData_v4', typedData);
               });
-              function eth_signTypedData_v4(_x7) {
+              function eth_signTypedData_v4(_x9) {
                 return _eth_signTypedData_v.apply(this, arguments);
               }
               return eth_signTypedData_v4;
             }(),
             // @ts-ignore
             eth_sendTransaction: function () {
-              var _eth_sendTransaction = _asyncToGenerator(function* (_ref8) {
+              var _eth_sendTransaction = _asyncToGenerator(function* (_ref9) {
                 var {
                   params: [transactionObject]
-                } = _ref8;
+                } = _ref9;
                 var txTo = transactionObject.to.toString();
                 var txValue = transactionObject.value.toString();
                 var txData = transactionObject.data ? transactionObject.data.toString() : '0x';
@@ -228,20 +255,65 @@ function AmbireWalletModule(sdkParams) {
                   });
                 });
               });
-              function eth_sendTransaction(_x8) {
+              function eth_sendTransaction(_x10) {
                 return _eth_sendTransaction.apply(this, arguments);
               }
               return eth_sendTransaction;
+            }(),
+            // @ts-ignore
+            eth_sendTransaction: function () {
+              var _eth_sendTransaction2 = _asyncToGenerator(function* (_ref10) {
+                var {
+                  params: [transactionObject]
+                } = _ref10;
+                return handleSignTransaction(transactionObject);
+              });
+              function eth_sendTransaction(_x11) {
+                return _eth_sendTransaction2.apply(this, arguments);
+              }
+              return eth_sendTransaction;
+            }(),
+            // @ts-ignore
+            eth_signTransaction: function () {
+              var _eth_signTransaction = _asyncToGenerator(function* (_ref11) {
+                var {
+                  params: [transactionObject]
+                } = _ref11;
+                return handleSignTransaction(transactionObject);
+              });
+              function eth_signTransaction(_x12) {
+                return _eth_signTransaction.apply(this, arguments);
+              }
+              return eth_signTransaction;
+            }(),
+            // @ts-ignore
+            wallet_switchEthereumChain: function () {
+              var _wallet_switchEthereumChain = _asyncToGenerator(function* (_ref12) {
+                var {
+                  params: [chainObject]
+                } = _ref12;
+                return handleLogin(chainObject.chainId);
+              });
+              function wallet_switchEthereumChain(_x13) {
+                return _wallet_switchEthereumChain.apply(this, arguments);
+              }
+              return wallet_switchEthereumChain;
             }()
           };
           var provider = common.createEIP1193Provider({
-            on: emitter.on.bind(emitter)
+            on: emitter.on.bind(emitter),
+            disconnect: () => {
+              ambireSDK.openLogout();
+              ambireSDK.onLogoutSuccess(() => {
+                connectedAccounts = [];
+              });
+            }
           }, requestPatch);
           return {
             provider
           };
         });
-        function getInterface(_x3) {
+        function getInterface(_x5) {
           return _getInterface.apply(this, arguments);
         }
         return getInterface;

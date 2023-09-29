@@ -1,14 +1,16 @@
 import { AmbireLogoSVG, AmbireLoginSDK, sdkParamsType } from '@ambire/login-sdk-core'
-import { createEIP1193Provider, WalletInit } from '@web3-onboard/common'
+import { createEIP1193Provider, WalletInit, TransactionObject } from '@web3-onboard/common'
 
 export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
     const ambireSDK = new AmbireLoginSDK(sdkParams)
 
     let connectedAccounts: string[] = []
-    let connectedchain: string = '0x1'
+    let connectedchain: string
 
-    const handleLogin = async () => {
-        ambireSDK.openLogin({chainId: parseInt(connectedchain)})
+    const handleLogin = async (chainId: string|null = null) => {
+        chainId = chainId ?? connectedchain
+
+        ambireSDK.openLogin({chainId: parseInt(chainId)})
 
         return new Promise((resolve, reject) => {
             ambireSDK.onLoginSuccess((data: any) => {
@@ -45,6 +47,24 @@ export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
             })
 
             ambireSDK.onMsgRejected(() => {
+                reject({ code: 4001, message: 'User rejected the request.' })
+            })
+        })
+    }
+
+    const handleSignTransaction = async (transactionObject: TransactionObject) => {
+        const txTo: string = transactionObject.to.toString()
+        const txValue: string = transactionObject.value ? transactionObject.value.toString() : '0x'
+        const txData: string = transactionObject.data ? transactionObject.data.toString() : '0x'
+
+        ambireSDK.openSendTransaction(txTo, txValue, txData)
+
+        return new Promise((resolve, reject) => {
+            ambireSDK.onTxnSent((data: any) => {
+                return resolve(data.hash)
+            })
+
+            ambireSDK.onTxnRejected(() => {
                 reject({ code: 4001, message: 'User rejected the request.' })
             })
         })
@@ -112,10 +132,28 @@ export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
                             })
                         })
                     },
+                    // @ts-ignore
+                    eth_sendTransaction: async ({ params: [transactionObject] }) => {
+                        return handleSignTransaction(transactionObject)
+                    },
+                    // @ts-ignore
+                    eth_signTransaction: async ({ params: [transactionObject] }) => {
+                        return handleSignTransaction(transactionObject)
+                    },
+                    // @ts-ignore
+                    wallet_switchEthereumChain: async ({ params: [chainObject] }) => {
+                        return handleLogin(chainObject.chainId)
+                    },
                 }
 
                 const provider = createEIP1193Provider({
                     on: emitter.on.bind(emitter),
+                    disconnect: () => {
+                        ambireSDK.openLogout()                      
+                        ambireSDK.onLogoutSuccess(() => {
+                            connectedAccounts = []
+                        })
+                    }
                 }, requestPatch)
 
                 return {
