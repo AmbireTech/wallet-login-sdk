@@ -1,5 +1,5 @@
 import { AmbireLogoSVG, AmbireLoginSDK, sdkParamsType } from '@ambire/login-sdk-core'
-import { createEIP1193Provider, WalletInit } from '@web3-onboard/common'
+import { createEIP1193Provider, WalletInit, TransactionObject } from '@web3-onboard/common'
 
 export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
     const ambireSDK = new AmbireLoginSDK(sdkParams)
@@ -45,6 +45,24 @@ export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
             })
 
             ambireSDK.onMsgRejected(() => {
+                reject({ code: 4001, message: 'User rejected the request.' })
+            })
+        })
+    }
+
+    const handleSignTransaction = async (transactionObject: TransactionObject) => {
+        const txTo: string = transactionObject.to.toString()
+        const txValue: string = transactionObject.value ? transactionObject.value.toString() : '0x'
+        const txData: string = transactionObject.data ? transactionObject.data.toString() : '0x'
+
+        ambireSDK.openSendTransaction(txTo, txValue, txData)
+
+        return new Promise((resolve, reject) => {
+            ambireSDK.onTxnSent((data: any) => {
+                return resolve(data.hash)
+            })
+
+            ambireSDK.onTxnRejected(() => {
                 reject({ code: 4001, message: 'User rejected the request.' })
             })
         })
@@ -111,6 +129,14 @@ export function AmbireWalletModule(sdkParams: sdkParamsType): WalletInit {
                                 reject({ code: 4001, message: 'User rejected the request.' })
                             })
                         })
+                    },
+                    // @ts-ignore
+                    eth_sendTransaction: async ({ params: [transactionObject] }) => {
+                        return handleSignTransaction(transactionObject)
+                    },
+                    // @ts-ignore
+                    eth_signTransaction: async ({ params: [transactionObject] }) => {
+                        return handleSignTransaction(transactionObject)
                     },
                 }
 
