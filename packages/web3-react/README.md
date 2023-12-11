@@ -1,6 +1,6 @@
 # @ambire/login-sdk-web3-react
 
-A module for integrating Ambire Wallet Login for DApps using web3-react.
+A module for integrating Ambire Wallet Login for dApps using web3-react.
 
 # Install
 
@@ -15,8 +15,8 @@ import { initializeConnector } from '@web3-react/core'
 import { AmbireConnector } from '@ambire/login-sdk-web3-react'
 
 const sdkOptions = {
-  dappName: 'Your DApp name',
-  dappIconPath: '<url-to-DApp-icon>',       // optional, but need for DApp icon to be shown in Ambire Login modal
+  dappName: 'Your dApp name',
+  dappIconPath: '<url-to-dApp-icon>',       // optional, but needed for dApp icon to be shown in Ambire Login modal
 }
 
 const [ambireConnector, ambireConnectHooks] = initializeConnector<AmbireConnector>(
