@@ -16,7 +16,7 @@ Welcome to the monorepo of Ambire Wallet Login SDK.
 
 ## Packages
 
-Included packages are the following:
+Included packages in this monorepo:
 - [@ambire/login-sdk-core](https://github.com/AmbireTech/wallet-login-sdk/tree/main/packages/core)
 package holdind the main SDK logic. Its purpose is to provide a framework agnostic API for implementing login with Ambire Wallet in any JS based dApp.
 - [@ambire/login-sdk-web3-react](https://github.com/AmbireTech/wallet-login-sdk/tree/main/packages/web3-react) - a convenience package for providing ready-to-use components for dApps using the [web3-react](https://www.npmjs.com/package/web3-react) library.
