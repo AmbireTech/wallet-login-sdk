@@ -25,6 +25,13 @@ Included packages in this monorepo:
 - [@ambire/login-sdk-web3-onboard](https://github.com/AmbireTech/wallet-login-sdk/tree/main/packages/web3-onboard) - a convenience package for providing ready-to-use modules for dApps using the [web3-onboard](https://www.npmjs.com/package/@web3-onboard/core) library.
 - [@ambire/login-sdk-browser](https://github.com/AmbireTech/wallet-login-sdk/tree/main/packages/browser) - package for providing browser-ready and minified code for usage of the SDK API in dApps with legacy JS code.
 
+## Demo
+
+Example implementation of Ambire SDK Login with Uniswap: [Demo dApp](https://ambiretech.github.io/uniswap-ambire-sdk-demo)
+
+!(demo sdk image 1)(/demo/demo-sdk-1.png)
+!(demo sdk image 2)(/demo/demo-sdk-2.png)
+
 # Development
 
 Required node verion: 16
