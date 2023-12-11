@@ -1,6 +1,6 @@
 {
   "name": "@ambire/login-sdk-web3-onboard",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Ambire Wallet Login SDK web3-onboard module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
