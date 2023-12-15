@@ -28,8 +28,10 @@ Included packages in this monorepo:
 
 Example implementation of Ambire SDK Login with Uniswap: [Demo dApp](https://ambiretech.github.io/uniswap-ambire-sdk-demo)
 
-![demo sdk image 1](/demo/demo-sdk-1.png)
-![demo sdk image 2](/demo/demo-sdk-2.png)
+![demo sdk image 1](https://raw.githubusercontent.com/AmbireTech/wallet-login-sdk/main/demo/demo-sdk-1.png)
+![demo sdk image 2](https://raw.githubusercontent.com/AmbireTech/wallet-login-sdk/main/demo/demo-sdk-2.png)
+![demo sdk image 3](https://raw.githubusercontent.com/AmbireTech/wallet-login-sdk/main/demo/demo-sdk-3.png)
+![demo sdk image 4](https://raw.githubusercontent.com/AmbireTech/wallet-login-sdk/main/demo/demo-sdk-4.png)
 
 # Development
 
