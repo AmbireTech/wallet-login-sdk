@@ -56,7 +56,7 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = ".ambireSDKiframe {\n  position: absolute;\n  background-color: rgba(255, 255, 255, 0.25);\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%) translateZ(0);\n  z-index: 999;\n  border-radius: 12px;\n  border: 0;\n  pointer-events: auto;\n  width: 480px;\n  height: 600px;\n}\n\n.ambireSDKmodal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  background-color: rgba(166, 174, 185, 0.7);\n  visibility: hidden;\n  opacity: 0;\n  pointer-events: auto;\n}\n\n.ambireSDKmodalVisible {\n  visibility: visible;\n  pointer-events: none;\n  opacity: 1;\n}\n";
+var css_248z = ".ambireSDKiframe {\n\tbackground-color: rgba(255, 255, 255, 0.25);\n\tborder-radius: 12px;\n\tborder: 0;\n\tpointer-events: auto;\n\tmax-width: 480px;\n\twidth: 100%;\n\theight: 600px;\n}\n\n.ambireSDKmodal {\n\tbox-sizing: border-box;\n\tposition: fixed;\n\ttop: 0;\n\tleft: 0;\n\twidth: 100vw;\n\theight: 100vh;\n\tz-index: 9999;\n\tbackground-color: rgba(166, 174, 185, 0.7);\n\tvisibility: hidden;\n\topacity: 0;\n\tpointer-events: auto;\n\tpadding: 12px;\n\t/* Center the content */\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n.ambireSDKmodalVisible {\n\tvisibility: visible;\n\tpointer-events: none;\n\topacity: 1;\n}\n";
 styleInject(css_248z);
 
 class AmbireLoginSDK {
@@ -109,8 +109,6 @@ class AmbireLoginSDK {
     if (!this.wrapperElement.childNodes || this.wrapperElement.childNodes.length == 0) {
       this.iframe = document.createElement('iframe');
       this.iframe.src = url;
-      this.iframe.width = '480px';
-      this.iframe.height = '600px';
       this.iframe.id = 'ambire-sdk-iframe';
       this.iframe.classList.add('ambireSDKiframe');
       this.wrapperElement.appendChild(this.iframe);
