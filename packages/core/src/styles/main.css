@@ -1,32 +1,34 @@
 .ambireSDKiframe {
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.25);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateZ(0);
-  z-index: 999;
-  border-radius: 12px;
-  border: 0;
-  pointer-events: auto;
-  width: 480px;
-  height: 600px;
+	background-color: rgba(255, 255, 255, 0.25);
+	border-radius: 12px;
+	border: 0;
+	pointer-events: auto;
+	max-width: 480px;
+	width: 100%;
+	height: 600px;
 }
 
 .ambireSDKmodal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
-  background-color: rgba(166, 174, 185, 0.7);
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: auto;
+	box-sizing: border-box;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 9999;
+	background-color: rgba(166, 174, 185, 0.7);
+	visibility: hidden;
+	opacity: 0;
+	pointer-events: auto;
+	padding: 12px;
+	/* Center the content */
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .ambireSDKmodalVisible {
-  visibility: visible;
-  pointer-events: none;
-  opacity: 1;
+	visibility: visible;
+	pointer-events: none;
+	opacity: 1;
 }
