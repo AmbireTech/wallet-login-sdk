@@ -1,6 +1,6 @@
 {
   "name": "@ambire/login-sdk-web3-onboard",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Ambire Wallet Login SDK web3-onboard module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/AmbireTech/wallet-login-sdk#readme",
   "dependencies": {
-    "@ambire/login-sdk-core": "^0.1.5",
+    "@ambire/login-sdk-core": "^0.1.7",
     "@web3-onboard/common": "^2.2.3"
   },
   "devDependencies": {
