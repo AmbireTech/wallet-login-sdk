@@ -44,6 +44,9 @@ npx lerna run build
 ```
 
 ## Publish a new version:
+
+Publish new package versions via Lerna. When this command is run, you go through an interactive prompt for choosing patch/minor/major version(s). As a result, along with publishing the packages to NPM, `version` in `packge.json` file(s) is also automatically changed and committed:
+
 ```
 npx lerna publish
 ```
